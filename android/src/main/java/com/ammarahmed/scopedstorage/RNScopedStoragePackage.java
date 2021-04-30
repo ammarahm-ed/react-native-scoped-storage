@@ -14,7 +14,7 @@ import com.facebook.react.bridge.JavaScriptModule;
 public class RNScopedStoragePackage implements ReactPackage {
   @Override
   public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-    return Arrays.<NativeModule>asList(new RNFastStorageModule(reactContext));
+    return Arrays.<NativeModule>asList(new RNScopedStorageModule(reactContext));
   }
 
   public List<Class<? extends JavaScriptModule>> createJSModules() {

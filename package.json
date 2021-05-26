@@ -9,7 +9,11 @@
   "keywords": [
     "react-native",
     "scoped-storage",
-    "storage-access-api"
+    "storage-access-api",
+    "react",
+    "native",
+    "scoped",
+    "storage"
   ],
   "repository": {
     "type": "git",
@@ -18,6 +22,6 @@
   "author": "Ammar Ahmed @ammarahm-ed",
   "license": "MIT",
   "peerDependencies": {
-    "react-native": "^0.56.3"
+    "react-native": "*"
   }
 }

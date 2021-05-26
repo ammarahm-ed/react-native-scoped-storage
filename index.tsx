@@ -2,7 +2,7 @@ import { NativeModules } from 'react-native';
 
 const { RNScopedStorage } = NativeModules;
 
-type FileType = {
+export type FileType = {
     /**Document Tree Uri for the file or directory*/
     uri: string
     /** Name of the file or directory*/
@@ -19,53 +19,99 @@ type FileType = {
     mime: string
 }
 
+/**
+ * Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
+ */
 export async function openDocumentTree(): Promise<FileType> {
     return await RNScopedStorage.openDocumentTree()
 }
 
+
+/**
+ * Open Document picker to create a file at the user specified location.
+ * @param fileName Name of the file to create.
+ * @param mime mime of the file to create. eg image/jpeg
+ * @param data Data to write to the file once it is created.
+ * @param encoding Encoding of the dat you are writing.
+ */
 export async function createDocument(fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii"): Promise<FileType> {
 
     return await RNScopedStorage.createDocument(fileName, mime, data, encoding)
 }
 
+/**
+ * Open Document picker for the user to select a file.
+ * @param readData Do you want to read data from the user specified file?
+ */
 export async function openDocument(readData: boolean): Promise<FileType> {
 
     return RNScopedStorage.openDocument(readData)
 }
 
+/**
+ * There is a limit to the number of uri permissions your app can persist. Get a list of all the persisted document tree uris so you are remove the ones you are not using or perform other operations.
+ */
 export async function getPersistedUriPermissions(): Promise<string[]> {
 
     return RNScopedStorage.getPersistedUriPermissions()
 }
 
+/**
+ * Remove a uri from persisted uri list.
+ * @param uri The uri you want to remove from persisted uri permissions.
+ */
 export async function releasePersistableUriPermission(uri: string) {
 
     RNScopedStorage.releasePersistableUriPermission(uri)
 }
 
-export async function listFiles(uri:string):Promise<FileType[]> {
+/**
+ * List all files and folders in a directory uri
+ * @param uri Path to a directory.
+ */
+export async function listFiles(uri: string): Promise<FileType[]> {
 
     return await RNScopedStorage.listFiles(uri);
 }
 
-export async function readFile(uri:string):Promise<string> {
+/**
+ * Read file at a given path. The path of the file must be a document tree uri.
+ * @param uri Path to the file you want to read.
+ */
+export async function readFile(uri: string): Promise<string> {
 
     return await RNScopedStorage.readFile(uri);
 }
 
-export async function rename(uri:string,name:string):Promise<string> {
+/**
+ * Rename a file or directory at the given path.
+ * @param uri Path to the file or directory to rename
+ * @param name New name for the file or directory
+ */
+export async function rename(uri: string, name: string): Promise<string> {
 
-    return await RNScopedStorage.rename(uri,name);
+    return await RNScopedStorage.rename(uri, name);
 }
-
-export async function deleteFile(uri:string):Promise<boolean> {
+/**
+ * Delete a file or directory at the given path.
+ * @param uri Path to the file or directory to delete
+ */
+export async function deleteFile(uri: string): Promise<boolean> {
 
     return await RNScopedStorage.delete(uri);
 }
 
-export async function writeFile(fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii",append:boolean): Promise<boolean> {
+/**
+ * Write to a file at the give directory. If the file does not exist, it will be created.
+ * @param fileName Name of the file
+ * @param mime Mime of the file. eg image/jpeg
+ * @param data Data you want to write
+ * @param encoding Encoding of the data you are writing.
+ * @param append Should the data be appended to the existing data in file?
+ */
+export async function writeFile(fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii", append: boolean): Promise<boolean> {
 
-    return await RNScopedStorage.writeFile(fileName, mime, data, encoding,append);
+    return await RNScopedStorage.writeFile(fileName, mime, data, encoding, append);
 
 }
 

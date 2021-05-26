@@ -18,20 +18,20 @@ npm install react-native-scoped-storage
 
 ### Type aliases
 
-- [FileType](modules.md#filetype)
+- [FileType](#filetype)
 
 ### Functions
 
-- [createDocument](modules.md#createdocument)
-- [deleteFile](modules.md#deletefile)
-- [getPersistedUriPermissions](modules.md#getpersisteduripermissions)
-- [listFiles](modules.md#listfiles)
-- [openDocument](modules.md#opendocument)
-- [openDocumentTree](modules.md#opendocumenttree)
-- [readFile](modules.md#readfile)
-- [releasePersistableUriPermission](modules.md#releasepersistableuripermission)
-- [rename](modules.md#rename)
-- [writeFile](modules.md#writefile)
+- [createDocument](#createdocument)
+- [deleteFile](#deletefile)
+- [getPersistedUriPermissions](#getpersisteduripermissions)
+- [listFiles](#listfiles)
+- [openDocument](#opendocument)
+- [openDocumentTree](#opendocumenttree)
+- [readFile](#readfile)
+- [releasePersistableUriPermission](#releasepersistableuripermission)
+- [rename](#rename)
+- [writeFile](#writefile)
 
 ## Type aliases
 
@@ -57,7 +57,7 @@ Defined in: [index.tsx:5](https://github.com/ammarahm-ed/react-native-scoped-sto
 
 ### createDocument
 
-▸ **createDocument**(`fileName`: *string*, `mime`: *string*, `data`: *string*, `encoding`: ``"utf8"`` \| ``"base64"`` \| ``"ascii"``): *Promise*<[*FileType*](modules.md#filetype)\>
+▸ **createDocument**(`fileName`: *string*, `mime`: *string*, `data`: *string*, `encoding`: ``"utf8"`` \| ``"base64"`` \| ``"ascii"``): *Promise*<[*FileType*](#filetype)\>
 
 Open Document picker to create a file at the user specified location.
 
@@ -70,7 +70,7 @@ Open Document picker to create a file at the user specified location.
 | `data` | *string* | Data to write to the file once it is created. |
 | `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding of the dat you are writing. |
 
-**Returns:** *Promise*<[*FileType*](modules.md#filetype)\>
+**Returns:** *Promise*<[*FileType*](#filetype)\>
 
 Defined in: [index.tsx:37](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L37)
 
@@ -108,7 +108,7 @@ ___
 
 ### listFiles
 
-▸ **listFiles**(`uri`: *string*): *Promise*<[*FileType*](modules.md#filetype)[]\>
+▸ **listFiles**(`uri`: *string*): *Promise*<[*FileType*](#filetype)[]\>
 
 List all files and folders in a directory uri
 
@@ -118,7 +118,7 @@ List all files and folders in a directory uri
 | :------ | :------ | :------ |
 | `uri` | *string* | Path to a directory. |
 
-**Returns:** *Promise*<[*FileType*](modules.md#filetype)[]\>
+**Returns:** *Promise*<[*FileType*](#filetype)[]\>
 
 Defined in: [index.tsx:72](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L72)
 
@@ -126,7 +126,7 @@ ___
 
 ### openDocument
 
-▸ **openDocument**(`readData`: *boolean*): *Promise*<[*FileType*](modules.md#filetype)\>
+▸ **openDocument**(`readData`: *boolean*): *Promise*<[*FileType*](#filetype)\>
 
 Open Document picker for the user to select a file.
 
@@ -136,7 +136,7 @@ Open Document picker for the user to select a file.
 | :------ | :------ | :------ |
 | `readData` | *boolean* | Do you want to read data from the user specified file? |
 
-**Returns:** *Promise*<[*FileType*](modules.md#filetype)\>
+**Returns:** *Promise*<[*FileType*](#filetype)\>
 
 Defined in: [index.tsx:46](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L46)
 
@@ -144,11 +144,11 @@ ___
 
 ### openDocumentTree
 
-▸ **openDocumentTree**(): *Promise*<[*FileType*](modules.md#filetype)\>
+▸ **openDocumentTree**(): *Promise*<[*FileType*](#filetype)\>
 
 Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
 
-**Returns:** *Promise*<[*FileType*](modules.md#filetype)\>
+**Returns:** *Promise*<[*FileType*](#filetype)\>
 
 Defined in: [index.tsx:25](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L25)
 

@@ -245,7 +245,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                         final int takeFlags = intent.getFlags()
                                 & (Intent.FLAG_GRANT_READ_URI_PERMISSION
                                 | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                        //reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
                         DocumentFile dir = DocumentFile.fromTreeUri(reactContext, uri);
                         DocumentFile file = dir.createFile(mimeType,fileName);
                         try {

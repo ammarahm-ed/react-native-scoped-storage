@@ -229,6 +229,9 @@ Write to a file at the given directory. If the file does not exist, it will be c
 
 Defined in: [index.tsx:112](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L112)
 
+## Thanks to 
+- [rn-fetch-blob](https://github.com/joltup/rn-fetch-blob) for the amazing library. Some part of code is taken from there.
+
 ## I want to contribute
 That is awesome news! There is alot happening at a very fast pace in this library right now. Every little help is precious. You can contribute in many ways:
 

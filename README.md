@@ -3,6 +3,8 @@ Starting in Android 11, apps that use the scoped storage model can access only t
 
 Scoped storage allows you to prompt the user that you need access to some file/folders. The user can the allow access to their desired location. It is your responsibility to store the uri you recieve for later use.
 
+**Important note**: Until React Native targets API 29, you do not need this library. However you should start testing it out in your apps/projects because soon, we will have to move to this new API for file access.
+
 ## Getting started
 Install the library
 

@@ -270,6 +270,9 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                         params.putString("uri", dir.getUri().toString());
                         params.putString("name", dir.getName());
                         params.putString("type", dir.isDirectory() ? "directory" : "file");
+                        if (dir.isFile()) {
+                             params.putString("mime", dir.getType());
+                        }
                         params.putDouble("lastModified", dir.lastModified());
                         promise.resolve(params);
                     }
@@ -310,7 +313,9 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                         params.putString("name", dir.getName());
                         params.putString("path", getDirectoryPathFromUri(reactContext, uri));
                         params.putString("type", dir.isDirectory() ? "directory" : "file");
-                        params.putString("mimeType", dir.getType());
+                        if (dir.isFile()) {
+                             params.putString("mime", dir.getType());
+                        }
                         params.putDouble("lastModified", dir.lastModified());
                         if (readData) {
                             try {
@@ -452,7 +457,9 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 fileMap.putString("uri", file.getUri().toString());
                 fileMap.putString("name", file.getName());
                 fileMap.putString("type", file.isDirectory() ? "directory" : "file");
-                fileMap.putString("mimeType", file.getType());
+                if (file.isFile()) {
+                     fileMap.putString("mime", file.getType());
+                }
                 fileMap.putDouble("lastModified", file.lastModified());
 
                 array.pushMap(fileMap);
@@ -521,7 +528,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @ReactMethod
-    public void writeFile(String path, String mimeType, String fileName, String encoding, String data, final boolean append, final Promise promise) {
+    public void writeFile(String path, String mimeType, String fileName, String data, String encoding, final boolean append, final Promise promise) {
         try {
             int written;
             boolean hasPermission = hasPermission(path);

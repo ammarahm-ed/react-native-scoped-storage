@@ -1,4 +1,11 @@
 # react-native-scoped-storage
+<a href="https://github.com/ammarahm-ed/react-native-scoped-storage/pulls" target="_blank">
+<img  src="https://img.shields.io/badge/PRs-welcome-green?color=blue&style=flat-square"/>
+</a>
+<a href="https://www.npmjs.com/package/react-native-scoped-storage" target="_blank">
+<img src="https://img.shields.io/npm/v/react-native-scoped-storage?color=orange&style=flat-square"/>
+</a>
+
 Starting in Android 11, apps that use the scoped storage model can access only their own app-specific cache files. As soon as React Native targets API 30, all of us will have to use Scoped Storage to access any files stored in the sdcard/phone storage. This library provides an API for react-native devs to start testing out scoped storage in their apps. Remember, you do not need `WRITE_EXTERNAL_STORAGE` permission in you `AndroidManifest.xml` file using this library. 
 
 Scoped storage allows you to prompt the user that you need access to some file/folders. The user can the allow access to their desired location. It is your responsibility to store the uri you recieve for later use.

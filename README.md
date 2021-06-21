@@ -253,11 +253,7 @@ This library is licensed under the [MIT license](https://github.com/ammarahm-ed/
 
 Copyright © Ammar Ahmed ([@ammarahm-ed](https://github.com/ammarahm-ed))
 
-
-
-
-
-
-
-
-
+#
+<a href="https://notesnook.com" target="_blank">
+<img style="align:center;" src="https://i.imgur.com/EMIqXNc.jpg" href="https://notesnook.com" alt="Notesnook Logo" width="50%" />
+</a>

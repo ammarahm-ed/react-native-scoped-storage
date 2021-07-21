@@ -54,8 +54,6 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     public RNScopedStorageModule(ReactApplicationContext rc) {
         super(reactContext);
         reactContext = rc;
-        reactContext.addActivityEventListener(activityEventListener);
-
     }
 
     /**
@@ -195,6 +193,10 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     public void openDocumentTree(final Promise promise) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        if (activityEventListener != null) {
+            reactContext.removeActivityEventListener(activityEventListener);
+            activityEventListener = null;
+        }
         activityEventListener = new ActivityEventListener() {
             @Override
             public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
@@ -225,6 +227,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
             }
         };
+
         reactContext.addActivityEventListener(activityEventListener);
         reactContext.getCurrentActivity().startActivityForResult(intent, REQUEST_CODE);
     }
@@ -235,6 +238,10 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     public void createDocument(final String fileName, final String mimeType, final String data, final String encoding, final Promise promise) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
+        if (activityEventListener != null) {
+            reactContext.removeActivityEventListener(activityEventListener);
+            activityEventListener = null;
+        }
         activityEventListener = new ActivityEventListener() {
             @Override
             public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
@@ -297,6 +304,10 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        if (activityEventListener != null) {
+            reactContext.removeActivityEventListener(activityEventListener);
+            activityEventListener = null;
+        }
         activityEventListener = new ActivityEventListener() {
             @Override
             public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {

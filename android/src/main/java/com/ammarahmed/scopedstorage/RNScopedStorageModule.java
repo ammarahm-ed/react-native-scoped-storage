@@ -26,19 +26,16 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -193,6 +190,11 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     public void openDocumentTree(final Promise promise) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        if (intent.resolveActivity(reactContext.getPackageManager()) == null) {
+            promise.reject("ACTIVITY_NOT_FOUND", "No activity fount to handle scoped storage access");
+            return;
+        }
+
         if (activityEventListener != null) {
             reactContext.removeActivityEventListener(activityEventListener);
             activityEventListener = null;
@@ -238,6 +240,12 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     public void createDocument(final String fileName, final String mimeType, final String data, final String encoding, final Promise promise) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        if (intent.resolveActivity(reactContext.getPackageManager()) == null) {
+            promise.reject("ACTIVITY_NOT_FOUND", "No activity fount to handle scoped storage access");
+            return;
+        }
         if (activityEventListener != null) {
             reactContext.removeActivityEventListener(activityEventListener);
             activityEventListener = null;
@@ -254,18 +262,18 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                                 | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                         //reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
                         DocumentFile dir = DocumentFile.fromTreeUri(reactContext, uri);
-                        DocumentFile file = dir.createFile(mimeType,fileName);
+                        DocumentFile file = dir.createFile(mimeType, fileName);
                         try {
-                        ParcelFileDescriptor descriptor = null;
-                        descriptor = reactContext.getContentResolver().openFileDescriptor(file.getUri(), "rw");
-                        byte[] bytes = stringToBytes(data, encoding);
-                        FileOutputStream fout = new FileOutputStream(descriptor.getFileDescriptor());
-                        try {
-                            fout.write(bytes);
-                        } finally {
-                            fout.close();
-                            descriptor.close();
-                        }
+                            ParcelFileDescriptor descriptor = null;
+                            descriptor = reactContext.getContentResolver().openFileDescriptor(file.getUri(), "rw");
+                            byte[] bytes = stringToBytes(data, encoding);
+                            FileOutputStream fout = new FileOutputStream(descriptor.getFileDescriptor());
+                            try {
+                                fout.write(bytes);
+                            } finally {
+                                fout.close();
+                                descriptor.close();
+                            }
 
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -278,7 +286,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                         params.putString("name", dir.getName());
                         params.putString("type", dir.isDirectory() ? "directory" : "file");
                         if (dir.isFile()) {
-                             params.putString("mime", dir.getType());
+                            params.putString("mime", dir.getType());
                         }
                         params.putDouble("lastModified", dir.lastModified());
                         promise.resolve(params);
@@ -300,10 +308,16 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @ReactMethod
-    public void openDocument(final boolean readData, final Promise promise) {
+    public void openDocument(final boolean readData, final String encoding, final Promise promise) {
 
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        if (intent.resolveActivity(reactContext.getPackageManager()) == null) {
+            promise.reject("ACTIVITY_NOT_FOUND", "No activity fount to handle scoped storage access");
+            return;
+        }
         if (activityEventListener != null) {
             reactContext.removeActivityEventListener(activityEventListener);
             activityEventListener = null;
@@ -317,26 +331,34 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                         final int takeFlags = data.getFlags()
                                 & (Intent.FLAG_GRANT_READ_URI_PERMISSION
                                 | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
-                        DocumentFile dir = DocumentFile.fromTreeUri(reactContext, uri);
+                        //reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                        DocumentFile dir = DocumentFile.fromSingleUri(reactContext, uri);
                         WritableMap params = Arguments.createMap();
                         params.putString("uri", uri.toString());
                         params.putString("name", dir.getName());
                         params.putString("path", getDirectoryPathFromUri(reactContext, uri));
                         params.putString("type", dir.isDirectory() ? "directory" : "file");
+
                         if (dir.isFile()) {
-                             params.putString("mime", dir.getType());
+                            params.putString("mime", dir.getType());
                         }
                         params.putDouble("lastModified", dir.lastModified());
                         if (readData) {
                             try {
-
-                                params.putString("data", readTextFromUri(uri));
+                                if (encoding != null) {
+                                    if (encoding == "ascii") {
+                                        WritableArray arr = (WritableArray) readFromUri(uri, encoding);
+                                        params.putArray("data", arr);
+                                    } else {
+                                        params.putString("data", (String) readFromUri(uri, encoding));
+                                    }
+                                } else {
+                                    params.putString("data", (String) readFromUri(uri, "utf8"));
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
-
 
                         promise.resolve(params);
 
@@ -431,19 +453,36 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
         return dir;
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private String readTextFromUri(Uri uri) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        try (InputStream inputStream =
-                     reactContext.getContentResolver().openInputStream(uri);
-             BufferedReader reader = new BufferedReader(
-                     new InputStreamReader(Objects.requireNonNull(inputStream)))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
+    private Object readFromUri(Uri uri, String encoding) throws IOException {
+        byte[] bytes;
+        int bytesRead;
+        int length;
+
+        InputStream inputStream =
+                reactContext.getContentResolver().openInputStream(uri);
+
+        length = inputStream.available();
+        bytes = new byte[length];
+        bytesRead = inputStream.read(bytes);
+        inputStream.close();
+
+        switch (encoding.toLowerCase()) {
+            case "base64":
+                return Base64.encodeToString(bytes, Base64.NO_WRAP);
+            case "ascii":
+                WritableArray asciiResult = Arguments.createArray();
+                for (byte b : bytes) {
+                    asciiResult.pushInt((int) b);
+                }
+                return asciiResult;
+            case "utf8":
+            default:
+                return new String(bytes);
         }
-        return stringBuilder.toString();
+
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -463,13 +502,13 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
             DocumentFile[] files = dir.listFiles();
 
             WritableArray array = Arguments.createArray();
-            for (DocumentFile file: files) {
+            for (DocumentFile file : files) {
                 WritableMap fileMap = Arguments.createMap();
                 fileMap.putString("uri", file.getUri().toString());
                 fileMap.putString("name", file.getName());
                 fileMap.putString("type", file.isDirectory() ? "directory" : "file");
                 if (file.isFile()) {
-                     fileMap.putString("mime", file.getType());
+                    fileMap.putString("mime", file.getType());
                 }
                 fileMap.putDouble("lastModified", file.lastModified());
 
@@ -483,7 +522,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @ReactMethod
-    public void readFile(String path, final Promise promise) {
+    public void readFile(String path, String encoding, final Promise promise) {
         try {
             boolean hasPermission = hasPermission(path);
             if (!hasPermission) {
@@ -496,8 +535,18 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 promise.reject("ENOENT", "'" + path + "'is not a file");
                 return;
             }
-            String data = readTextFromUri(Uri.parse(path));
-            promise.resolve(data);
+            Uri uri = Uri.parse(path);
+
+            if (encoding != null) {
+                if (encoding == "ascii") {
+                    WritableArray arr = (WritableArray) readFromUri(uri, encoding);
+                    promise.resolve((arr));
+                } else {
+                    promise.resolve((String) readFromUri(uri, encoding));
+                }
+            } else {
+                promise.resolve((String) readFromUri(uri, "utf8"));
+            }
         } catch (Exception e) {
             promise.reject("EUNSPECIFIED", e.getLocalizedMessage());
         }
@@ -561,7 +610,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 file = dir.createFile(mimeType, fileName);
             } else {
                 if (append) {
-                    data = data + readTextFromUri(file.getUri());
+                    data = data + readFromUri(file.getUri(), "utf8");
                 } else {
                     file.delete();
                     file = dir.createFile(mimeType, fileName);

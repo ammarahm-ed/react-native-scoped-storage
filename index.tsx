@@ -42,10 +42,11 @@ export async function createDocument(fileName: string, mime: string, data: strin
 /**
  * Open Document picker for the user to select a file.
  * @param readData Do you want to read data from the user specified file?
+ * @param encoding Encoding for the file you are reading.
  */
-export async function openDocument(readData: boolean): Promise<FileType> {
+export async function openDocument(readData: boolean,encoding:"utf8"|"base64"|"ascii"): Promise<FileType> {
 
-    return RNScopedStorage.openDocument(readData)
+    return RNScopedStorage.openDocument(readData,encoding)
 }
 
 /**
@@ -77,10 +78,11 @@ export async function listFiles(uri: string): Promise<FileType[]> {
 /**
  * Read file at a given path. The path of the file must be a document tree uri.
  * @param uri Path to the file you want to read.
+ * @param encoding Encoding for the file you are reading.
  */
-export async function readFile(uri: string): Promise<string> {
+export async function readFile(uri: string,encoding:"utf8"|"base64"|"ascii"): Promise<string> {
 
-    return await RNScopedStorage.readFile(uri);
+    return await RNScopedStorage.readFile(uri,encoding);
 }
 
 /**

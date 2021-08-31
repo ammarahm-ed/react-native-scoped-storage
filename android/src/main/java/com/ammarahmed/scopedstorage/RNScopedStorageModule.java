@@ -190,10 +190,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     public void openDocumentTree(final Promise promise) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        if (intent.resolveActivity(reactContext.getPackageManager()) == null) {
-            promise.reject("ACTIVITY_NOT_FOUND", "No activity fount to handle scoped storage access");
-            return;
-        }
+        
 
         if (activityEventListener != null) {
             reactContext.removeActivityEventListener(activityEventListener);
@@ -242,10 +239,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
         intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
-        if (intent.resolveActivity(reactContext.getPackageManager()) == null) {
-            promise.reject("ACTIVITY_NOT_FOUND", "No activity fount to handle scoped storage access");
-            return;
-        }
+        
         if (activityEventListener != null) {
             reactContext.removeActivityEventListener(activityEventListener);
             activityEventListener = null;
@@ -314,10 +308,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
-        if (intent.resolveActivity(reactContext.getPackageManager()) == null) {
-            promise.reject("ACTIVITY_NOT_FOUND", "No activity fount to handle scoped storage access");
-            return;
-        }
+        
         if (activityEventListener != null) {
             reactContext.removeActivityEventListener(activityEventListener);
             activityEventListener = null;

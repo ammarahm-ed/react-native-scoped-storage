@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.util.Base64;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
@@ -509,10 +510,16 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 return;
             }
             DocumentFile dir = DocumentFile.fromTreeUri(reactContext, Uri.parse(path));
+            Log.d("PATH", dir.getUri().toString() + path);
 
-            if (dir.getUri().toString() != path) {
-                dir = mkdir(path);
+           //  if (dir.getUri().toString() != path) {
+           //     dir = mkdir(path);
+           // }
+            if (!dir.isDirectory()) {
+                promise.reject("ENOENT", "'" + path + "'is not a directory.");
+                return;
             }
+
             DocumentFile[] files = dir.listFiles();
 
             WritableArray array = Arguments.createArray();
@@ -614,8 +621,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
             DocumentFile dir = DocumentFile.fromTreeUri(reactContext, Uri.parse(path));
 
-
-            if (dir.getUri().toString() != path) {
+            if (!dir.getUri().toString().equals(path)) {
                 dir = mkdir(path);
             }
 

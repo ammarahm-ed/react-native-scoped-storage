@@ -31,6 +31,7 @@ npm install react-native-scoped-storage
 
 ### Functions
 
+- [createDirectory](#createdirectory)
 - [createDocument](#createdocument)
 - [deleteFile](#deletefile)
 - [getPersistedUriPermissions](#getpersisteduripermissions)
@@ -63,6 +64,25 @@ npm install react-native-scoped-storage
 Defined in: [index.tsx:5](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L5)
 
 ## Functions
+
+### createDirectory
+
+▸ **createDrectory**(`parent`: *string*, `displayName`: *string*): *Promise*<[*FileType*](#filetype)\>
+
+Create a new directory under a parent uri.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `parent` | *string* | Uri of the parent directory |
+| `displayName` | *string* | Name of the directory to create |
+
+**Returns:** *Promise*<[*FileType*](#filetype)\>
+
+Defined in: [index.tsx:111](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/5d965cb/index.tsx#L111)
+
+___
 
 ### createDocument
 

@@ -104,6 +104,16 @@ export async function deleteFile(uri: string): Promise<boolean> {
 }
 
 /**
+ * Create a directory at the given path.
+ * @param parent Uri of the parent directory
+ * @param displayName Name of the new directory
+ */
+export async function createDirectory(parent: string, displayName: string): Promise<FileType> {
+
+  return await RNScopedStorage.createDirectory(parent, displayName);
+
+}
+/**
  * Write to a file at the give directory. If the file does not exist, it will be created.
  * @param fileName Name of the file
  * @param mime Mime of the file. eg image/jpeg

@@ -105,12 +105,12 @@ export async function deleteFile(uri: string): Promise<boolean> {
 
 /**
  * Create a directory at the given path.
- * @param parent Uri of the parent directory
- * @param displayName Name of the new directory
+ * @param path Uri of the parent directory
+ * @param dirName Name of the new directory
  */
-export async function createDirectory(parent: string, displayName: string): Promise<FileType> {
+export async function createDirectory(path: string, dirName: string): Promise<FileType> {
 
-  return await RNScopedStorage.createDirectory(parent, displayName);
+  return await RNScopedStorage.createDirectory(path, dirName);
 
 }
 /**

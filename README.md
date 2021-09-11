@@ -67,7 +67,7 @@ Defined in: [index.tsx:5](https://github.com/ammarahm-ed/react-native-scoped-sto
 
 ### createDirectory
 
-▸ **createDrectory**(`parent`: *string*, `displayName`: *string*): *Promise*<[*FileType*](#filetype)\>
+▸ **createDrectory**(`path`: *string*, `dirName`: *string*): *Promise*<[*FileType*](#filetype)\>
 
 Create a new directory under a parent uri.
 
@@ -75,8 +75,8 @@ Create a new directory under a parent uri.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `parent` | *string* | Uri of the parent directory |
-| `displayName` | *string* | Name of the directory to create |
+| `path` | *string* | Uri of the parent directory |
+| `dirName` | *string* | Name of the directory to create |
 
 **Returns:** *Promise*<[*FileType*](#filetype)\>
 

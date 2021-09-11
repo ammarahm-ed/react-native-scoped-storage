@@ -609,7 +609,36 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @ReactMethod
-    public void writeFile(String path, String fileName, String mimeType, String data, String encoding, final boolean append, final Promise promise) {
+    public void createDirectory(String parent, String displayName, final Promise promise) {
+        try {
+            boolean hasPermission = hasPermission(parent);
+
+            if (!hasPermission) {
+                promise.reject("ENOENT", "'" + parent + "'does not have permission to create directories");
+                return;
+            }
+
+            DocumentFile dir = DocumentFile.fromTreeUri(reactContext, Uri.parse(parent));
+
+            DocumentFile newDir = dir.createDirectory(displayName);
+
+            WritableMap fileMap = Arguments.createMap();
+            fileMap.putString("uri", newDir.getUri().toString());
+            fileMap.putString("name", newDir.getName());
+            fileMap.putString("type", "directory");
+            fileMap.putDouble("lastModified", newDir.lastModified());
+
+            promise.resolve(fileMap);
+        } catch (UnsupportedOperationException e) {
+            promise.reject("ENOENT", "'" + displayName + "' could not be created");
+        } catch (Exception e) {
+            promise.reject("EUNSPECIFIED", e.getLocalizedMessage());
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @ReactMethod
+    public void writeFile(String path, String fileName, String mimeType, String data, String encoding, final boolean append, final Promise promise) 
         try {
             int written;
             boolean hasPermission = hasPermission(path);

@@ -220,7 +220,7 @@ ___
 
 ### writeFile
 
-▸ **writeFile**(`fileName`: *string*, `mime`: *string*, `data`: *string*, `encoding`: ``"utf8"`` \| ``"base64"`` \| ``"ascii"``, `append`: *boolean*): *Promise*<boolean\>
+▸ **writeFile**(`path`: *string*, `fileName`: *string*, `mime`: *string*, `data`: *string*, `encoding`: ``"utf8"`` \| ``"base64"`` \| ``"ascii"``, `append`: *boolean*): *Promise*<boolean\>
 
 Write to a file at the given directory. If the file does not exist, it will be created.
 
@@ -228,6 +228,7 @@ Write to a file at the given directory. If the file does not exist, it will be c
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
+| `path`     | *string* | Uri of the directory |
 | `fileName` | *string* | Name of the file |
 | `mime` | *string* | Mime of the file. eg image/jpeg |
 | `data` | *string* | Data you want to write |

@@ -105,15 +105,16 @@ export async function deleteFile(uri: string): Promise<boolean> {
 
 /**
  * Write to a file at the give directory. If the file does not exist, it will be created.
+ * @param path Uri of the directory
  * @param fileName Name of the file
  * @param mime Mime of the file. eg image/jpeg
  * @param data Data you want to write
  * @param encoding Encoding of the data you are writing.
  * @param append Should the data be appended to the existing data in file?
  */
-export async function writeFile(fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii", append: boolean): Promise<boolean> {
+export async function writeFile(path: string, fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii", append: boolean): Promise<boolean> {
 
-    return await RNScopedStorage.writeFile(fileName, mime, data, encoding, append);
+    return await RNScopedStorage.writeFile(path, fileName, mime, data, encoding, append);
 
 }
 

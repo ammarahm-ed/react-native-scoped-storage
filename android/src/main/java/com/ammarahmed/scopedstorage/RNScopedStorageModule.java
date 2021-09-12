@@ -638,7 +638,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @ReactMethod
-    public void writeFile(String path, String fileName, String mimeType, String data, String encoding, final boolean append, final Promise promise) 
+    public void writeFile(String path, String fileName, String mimeType, String data, String encoding, final boolean append, final Promise promise) { 
         try {
             int written;
             boolean hasPermission = hasPermission(path);

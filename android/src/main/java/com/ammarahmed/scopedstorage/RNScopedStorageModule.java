@@ -672,7 +672,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
             boolean hasPermission = hasPermission(path);
 
             if (!hasPermission) {
-                promise.reject("ENOENT", "'" + path + "'does not have permission to read/write");
+                promise.reject("ENOENT", "'" + path + "' does not have permission to read/write");
                 return;
             }
 

@@ -102,7 +102,6 @@ export async function deleteFile(uri: string): Promise<boolean> {
 
     return await RNScopedStorage.delete(uri);
 }
-
 /**
  * Create a directory at the given path.
  * @param path Uri of the parent directory
@@ -127,5 +126,13 @@ export async function writeFile(path: string, fileName: string, mime: string, da
     return await RNScopedStorage.writeFile(path, fileName, mime, data, encoding, append);
 
 }
+/**
+ * Create a new file at the given directory.
+ * @param path Uri of the parent directory
+ * @param fileName Name of the new file.
+ * @param mime Mime type of the file, e.g. image/jpeg
+ */
+export async function createFile(path: string, fileName: string, mime: string): Promise<FileType> {
 
-
+    return await RNScopedStorage.createFile(path, fileName, mime);
+}

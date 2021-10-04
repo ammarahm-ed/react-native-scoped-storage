@@ -22,8 +22,8 @@ export type FileType = {
 /**
  * Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
  */
-export async function openDocumentTree(): Promise<FileType> {
-    return await RNScopedStorage.openDocumentTree()
+export async function openDocumentTree(persist:boolean): Promise<FileType> {
+    return await RNScopedStorage.openDocumentTree(persist)
 }
 
 

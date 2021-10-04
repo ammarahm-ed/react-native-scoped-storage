@@ -194,9 +194,15 @@ ___
 
 ### openDocumentTree
 
-▸ **openDocumentTree**(): *Promise*<[*FileType*](#filetype)\>
+▸ **openDocumentTree**(`persist`:*boolean*): *Promise*<[*FileType*](#filetype)\>
 
 Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `persist` | *boolean* | Persist permissions for selected directory for later use |
 
 **Returns:** *Promise*<[*FileType*](#filetype)\>
 

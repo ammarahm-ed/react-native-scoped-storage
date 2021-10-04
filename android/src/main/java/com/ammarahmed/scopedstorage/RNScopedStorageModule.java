@@ -188,7 +188,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @ReactMethod
-    public void openDocumentTree(final Promise promise) {
+    public void openDocumentTree(final boolean persist, final Promise promise) {
 
         try {
 
@@ -206,11 +206,13 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
                     if (data != null) {
                         Uri uri = data.getData();
-
-                        final int takeFlags = data.getFlags()
+                        if (persist) {
+                            final int takeFlags = data.getFlags()
                                 & (Intent.FLAG_GRANT_READ_URI_PERMISSION
                                 | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                            reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                        }
+                        
                         DocumentFile dir = DocumentFile.fromTreeUri(reactContext, uri);
                         WritableMap params = Arguments.createMap();
                         params.putString("uri", uri.toString());
@@ -263,10 +265,6 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                     if (intent != null) {
                         Uri uri = intent.getData();
 
-                        final int takeFlags = intent.getFlags()
-                                & (Intent.FLAG_GRANT_READ_URI_PERMISSION
-                                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        //reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
                         DocumentFile dir = DocumentFile.fromTreeUri(reactContext, uri);
                         DocumentFile file = dir.createFile(mimeType, fileName);
                         try {
@@ -339,10 +337,6 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
                     if (data != null) {
                         Uri uri = data.getData();
-                        final int takeFlags = data.getFlags()
-                                & (Intent.FLAG_GRANT_READ_URI_PERMISSION
-                                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        //reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
                         DocumentFile dir = DocumentFile.fromSingleUri(reactContext, uri);
                         WritableMap params = Arguments.createMap();
                         params.putString("uri", uri.toString());
@@ -510,11 +504,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 return;
             }
             DocumentFile dir = DocumentFile.fromTreeUri(reactContext, Uri.parse(path));
-            Log.d("PATH", dir.getUri().toString() + path);
-
-           //  if (dir.getUri().toString() != path) {
-           //     dir = mkdir(path);
-           // }
+           
             if (!dir.isDirectory()) {
                 promise.reject("ENOENT", "'" + path + "'is not a directory.");
                 return;

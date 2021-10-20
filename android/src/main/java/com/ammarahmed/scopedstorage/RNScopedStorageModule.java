@@ -700,7 +700,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 fout.close();
                 descriptor.close();
             }
-            promise.resolve(written);
+            promise.resolve(file.getUri().toString());
         } catch (FileNotFoundException e) {
             promise.reject("ENOENT", "'" + path + "' does not exist and could not be created, or it is a directory");
         } catch (Exception e) {

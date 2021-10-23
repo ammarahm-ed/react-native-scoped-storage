@@ -43,6 +43,7 @@ npm install react-native-scoped-storage
 - [releasePersistableUriPermission](#releasepersistableuripermission)
 - [rename](#rename)
 - [writeFile](#writefile)
+- [stat](#stat)
 
 ## Type aliases
 
@@ -62,7 +63,7 @@ npm install react-native-scoped-storage
 | `type` | ``"file"`` \| ``"directory"`` | - |
 | `uri` | *string* | Document Tree Uri for the file or directory |
 
-Defined in: [index.tsx:5](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L5)
+Defined in: [index.tsx:5](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L5)
 
 ## Functions
 
@@ -81,7 +82,7 @@ Create a new directory under a parent uri.
 
 **Returns:** *Promise*<[*FileType*](#filetype)\>
 
-Defined in: [index.tsx:111](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/5d965cb/index.tsx#L111)
+Defined in: [index.tsx:111](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/5d965cb/index.ts#L111)
 
 ___
 
@@ -101,7 +102,7 @@ Create a new file under a parent path.
 
 **Returns:** *Promise*<[*FileType*](#filetype)\>
 
-Defined in: [index.tsx:135](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/5d965cb/index.tsx#L135)
+Defined in: [index.tsx:135](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/5d965cb/index.ts#L135)
 
 ___
 
@@ -122,7 +123,7 @@ Open Document picker to create a file at the user specified location.
 
 **Returns:** *Promise*<[*FileType*](#filetype)\>
 
-Defined in: [index.tsx:37](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L37)
+Defined in: [index.tsx:37](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L37)
 
 ___
 
@@ -140,7 +141,7 @@ Delete a file or directory at the given path.
 
 **Returns:** *Promise*<boolean\>
 
-Defined in: [index.tsx:99](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L99)
+Defined in: [index.tsx:99](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L99)
 
 ___
 
@@ -152,7 +153,7 @@ There is a limit to the number of uri permissions your app can persist. Get a li
 
 **Returns:** *Promise*<string[]\>
 
-Defined in: [index.tsx:54](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L54)
+Defined in: [index.tsx:54](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L54)
 
 ___
 
@@ -170,7 +171,7 @@ List all files and folders in a directory uri
 
 **Returns:** *Promise*<[*FileType*](#filetype)[]\>
 
-Defined in: [index.tsx:72](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L72)
+Defined in: [index.tsx:72](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L72)
 
 ___
 
@@ -188,7 +189,7 @@ Open Document picker for the user to select a file.
 
 **Returns:** *Promise*<[*FileType*](#filetype)\>
 
-Defined in: [index.tsx:46](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L46)
+Defined in: [index.tsx:46](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L46)
 
 ___
 
@@ -206,7 +207,7 @@ Open the Document Picker to select a folder. Read/Write Permission will be grant
 
 **Returns:** *Promise*<[*FileType*](#filetype)\>
 
-Defined in: [index.tsx:25](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L25)
+Defined in: [index.tsx:25](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L25)
 
 ___
 
@@ -224,7 +225,7 @@ Read file at a given path. The path of the file must be a document tree uri.
 
 **Returns:** *Promise*<string\>
 
-Defined in: [index.tsx:81](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L81)
+Defined in: [index.tsx:81](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L81)
 
 ___
 
@@ -242,7 +243,7 @@ Remove a uri from persisted uri list.
 
 **Returns:** *Promise*<void\>
 
-Defined in: [index.tsx:63](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L63)
+Defined in: [index.tsx:63](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L63)
 
 ___
 
@@ -261,13 +262,13 @@ Rename a file or directory at the given path.
 
 **Returns:** *Promise*<string\>
 
-Defined in: [index.tsx:91](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L91)
+Defined in: [index.tsx:91](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L91)
 
 ___
 
 ### writeFile
 
-▸ **writeFile**(`path`: *string*, `fileName`: *string*, `mime`: *string*, `data`: *string*, `encoding`: ``"utf8"`` \| ``"base64"`` \| ``"ascii"``, `append`: *boolean*): *Promise*<boolean\>
+▸ **writeFile**(`path`: *string*, `fileName`: *string*, `mime`: *string*, `data`: *string*, `encoding`: ``"utf8"`` \| ``"base64"`` \| ``"ascii"``, `append`: *boolean*): *Promise*<string\>
 
 Write to a file at the given directory. If the file does not exist, it will be created.
 
@@ -282,9 +283,24 @@ Write to a file at the given directory. If the file does not exist, it will be c
 | `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding of the data you are writing. |
 | `append` | *boolean* | Should the data be appended to the existing data in file? |
 
-**Returns:** *Promise*<boolean\>
+**Returns:** *Promise*<string\>
 
-Defined in: [index.tsx:112](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.tsx#L112)
+Defined in: [index.tsx:112](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L112)
+
+___
+
+▸ **stat**(`path`: *string*, ): *Promise*<[*FileType*](#filetype)\>
+
+Get info for a file/directory at a given uri.
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `path`     | *string* | Uri of the file/directory |
+
+**Returns:** *Promise*<[*FileType*](#filetype)\>
+
+Defined in: [index.tsx:112](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L144)
 
 ## Thanks to 
 - [rn-fetch-blob](https://github.com/joltup/rn-fetch-blob) for the amazing library. Some part of code is taken from there.

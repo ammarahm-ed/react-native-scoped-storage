@@ -414,7 +414,8 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
         for (UriPermission uriPermission : uriList) {
             String uriString = uriPermission.getUri().toString();
-            if (string.startsWith(uriString) && uriPermission.isReadPermission() && uriPermission.isWritePermission()) {
+
+            if ((uriString.startsWith(string) || string.startsWith(uriString)) && uriPermission.isReadPermission() && uriPermission.isWritePermission()) {
                 return true;
             }
         }
@@ -519,6 +520,33 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 array.pushMap(fileMap);
             }
             promise.resolve(array);
+        } catch (Exception e) {
+            promise.reject("EUNSPECIFIED", e.getLocalizedMessage());
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @ReactMethod
+    public void stat(String path, final Promise promise) {
+        try {
+            boolean hasPermission = hasPermission(path);
+            if (!hasPermission) {
+                promise.reject("ENOENT", "'" + path + "'does not have permission to read/write");
+                return;
+            }
+
+            DocumentFile dir = DocumentFile.fromSingleUri(reactContext, Uri.parse(path));
+
+            WritableMap fileMap = Arguments.createMap();
+            fileMap.putString("uri", dir.getUri().toString());
+            fileMap.putString("name", dir.getName());
+            fileMap.putString("type", dir.isDirectory() ? "directory" : "file");
+            if (dir.isFile()) {
+                fileMap.putString("mime", dir.getType());
+            }
+            fileMap.putDouble("lastModified", dir.lastModified());
+            promise.resolve(fileMap);
+
         } catch (Exception e) {
             promise.reject("EUNSPECIFIED", e.getLocalizedMessage());
         }

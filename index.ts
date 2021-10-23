@@ -121,7 +121,7 @@ export async function createDirectory(path: string, dirName: string): Promise<Fi
  * @param encoding Encoding of the data you are writing.
  * @param append Should the data be appended to the existing data in file?
  */
-export async function writeFile(path: string, fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii", append: boolean): Promise<boolean> {
+export async function writeFile(path: string, fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii", append: boolean): Promise<string> {
 
     return await RNScopedStorage.writeFile(path, fileName, mime, data, encoding, append);
 
@@ -135,4 +135,12 @@ export async function writeFile(path: string, fileName: string, mime: string, da
 export async function createFile(path: string, fileName: string, mime: string): Promise<FileType> {
 
     return await RNScopedStorage.createFile(path, fileName, mime);
+}
+
+/**
+ * Get info for a file/directory at a given uri.
+ * @param path Uri of the parent directory
+ */
+export async function stat(path:string) {
+    return await RNScopedStorage.stat(path);
 }

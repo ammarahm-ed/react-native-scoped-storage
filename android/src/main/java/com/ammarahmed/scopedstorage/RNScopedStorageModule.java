@@ -32,6 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -210,6 +211,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                             final int takeFlags = data.getFlags()
                                 & (Intent.FLAG_GRANT_READ_URI_PERMISSION
                                 | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
                             reactContext.getContentResolver().takePersistableUriPermission(uri, takeFlags);
                         }
                         
@@ -247,12 +249,11 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     public void createDocument(final String fileName, final String mimeType, final String data, final String encoding, final Promise promise) {
         try {
 
-
-
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_TITLE, fileName);
+        intent.setType(mimeType);
 
         if (activityEventListener != null) {
             reactContext.removeActivityEventListener(activityEventListener);
@@ -265,20 +266,15 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                     if (intent != null) {
                         Uri uri = intent.getData();
 
-                        DocumentFile dir = DocumentFile.fromTreeUri(reactContext, uri);
-                        DocumentFile file = dir.createFile(mimeType, fileName);
+                        DocumentFile dir = DocumentFile.fromSingleUri(reactContext,uri);
                         try {
-                            ParcelFileDescriptor descriptor = null;
-                            descriptor = reactContext.getContentResolver().openFileDescriptor(file.getUri(), "rw");
                             byte[] bytes = stringToBytes(data, encoding);
-                            FileOutputStream fout = new FileOutputStream(descriptor.getFileDescriptor());
+                            OutputStream os = reactContext.getContentResolver().openOutputStream(uri);
                             try {
-                                fout.write(bytes);
+                                os.write(bytes);
                             } finally {
-                                fout.close();
-                                descriptor.close();
+                                os.close();
                             }
-
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         } catch (IOException e) {
@@ -319,9 +315,6 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     public void openDocument(final boolean readData, final String encoding, final Promise promise) {
 
         try {
-
-
-
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);

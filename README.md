@@ -32,8 +32,8 @@ npm install react-native-scoped-storage
 ### Functions
 
 - [createDirectory](#createdirectory)
-- [createFile](#createfile)
 - [createDocument](#createdocument)
+- [createFile](#createfile)
 - [deleteFile](#deletefile)
 - [getPersistedUriPermissions](#getpersisteduripermissions)
 - [listFiles](#listfiles)
@@ -42,73 +42,59 @@ npm install react-native-scoped-storage
 - [readFile](#readfile)
 - [releasePersistableUriPermission](#releasepersistableuripermission)
 - [rename](#rename)
-- [writeFile](#writefile)
 - [stat](#stat)
+- [writeFile](#writefile)
 
 ## Type aliases
 
 ### FileType
 
-Ƭ **FileType**: *object*
+Ƭ **FileType**: `Object`
 
 #### Type declaration
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `data` | *string* | data read from the file |
-| `lastModified` | *number* | Last modified date of the file or directory |
-| `mime` | *string* | mime type of the file |
-| `name` | *string* | Name of the file or directory |
-| `path` | *string* | Storage path for the file |
+| `data` | `string` | data read from the file |
+| `lastModified` | `number` | Last modified date of the file or directory |
+| `mime` | `string` | mime type of the file |
+| `name` | `string` | Name of the file or directory |
+| `path` | `string` | Storage path for the file |
 | `type` | ``"file"`` \| ``"directory"`` | - |
-| `uri` | *string* | Document Tree Uri for the file or directory |
+| `uri` | `string` | Document Tree Uri for the file or directory |
 
-Defined in: [index.tsx:5](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L5)
+#### Defined in
+
+[index.ts:6](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L6)
 
 ## Functions
 
 ### createDirectory
 
-▸ **createDirectory**(`path`: *string*, `dirName`: *string*): *Promise*<[*FileType*](#filetype)\>
+▸ **createDirectory**(`path`, `dirName`): `Promise`<[`FileType`](#filetype)\>
 
-Create a new directory under a parent uri.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `path` | *string* | Uri of the parent directory |
-| `dirName` | *string* | Name of the directory to create |
-
-**Returns:** *Promise*<[*FileType*](#filetype)\>
-
-Defined in: [index.tsx:111](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/5d965cb/index.ts#L111)
-
-___
-
-### createFile
-
-▸ **createFile**(`path`: *string*, `fileName`: *string*, `mime`: *string*): *Promise*<[*FileType*](#filetype)\>
-
-Create a new file under a parent path.
+Create a directory at the given path.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | *string* | Uri of the parent directory |
-| `fileName` | *string* | Name of the file to create |
-| `mime` | *string* | mime of the file to create. eg image/jpeg |
+| `path` | `string` | Uri of the parent directory |
+| `dirName` | `string` | Name of the new directory |
 
-**Returns:** *Promise*<[*FileType*](#filetype)\>
+#### Returns
 
-Defined in: [index.tsx:135](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/5d965cb/index.ts#L135)
+`Promise`<[`FileType`](#filetype)\>
+
+#### Defined in
+
+[index.ts:111](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L111)
 
 ___
 
 ### createDocument
 
-▸ **createDocument**(`fileName`: *string*, `mime`: *string*, `data`: *string*, `encoding`: ``"utf8"`` \| ``"base64"`` \| ``"ascii"``): *Promise*<[*FileType*](#filetype)\>
+▸ **createDocument**(`fileName`, `mime`, `data`, `encoding`): `Promise`<[`FileType`](#filetype)\>
 
 Open Document picker to create a file at the user specified location.
 
@@ -116,20 +102,48 @@ Open Document picker to create a file at the user specified location.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `fileName` | *string* | Name of the file to create. |
-| `mime` | *string* | mime of the file to create. eg image/jpeg |
-| `data` | *string* | Data to write to the file once it is created. |
+| `fileName` | `string` | Name of the file to create. |
+| `mime` | `string` | mime of the file to create. eg image/jpeg |
+| `data` | `string` | Data to write to the file once it is created. |
 | `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding of the dat you are writing. |
 
-**Returns:** *Promise*<[*FileType*](#filetype)\>
+#### Returns
 
-Defined in: [index.tsx:37](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L37)
+`Promise`<[`FileType`](#filetype)\>
+
+#### Defined in
+
+[index.ts:38](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L38)
+
+___
+
+### createFile
+
+▸ **createFile**(`path`, `fileName`, `mime`): `Promise`<[`FileType`](#filetype)\>
+
+Create a new file at the given directory.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `path` | `string` | Uri of the parent directory |
+| `fileName` | `string` | Name of the new file. |
+| `mime` | `string` | Mime type of the file, e.g. image/jpeg |
+
+#### Returns
+
+`Promise`<[`FileType`](#filetype)\>
+
+#### Defined in
+
+[index.ts:136](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L136)
 
 ___
 
 ### deleteFile
 
-▸ **deleteFile**(`uri`: *string*): *Promise*<boolean\>
+▸ **deleteFile**(`uri`): `Promise`<`boolean`\>
 
 Delete a file or directory at the given path.
 
@@ -137,29 +151,37 @@ Delete a file or directory at the given path.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `uri` | *string* | Path to the file or directory to delete |
+| `uri` | `string` | Path to the file or directory to delete |
 
-**Returns:** *Promise*<boolean\>
+#### Returns
 
-Defined in: [index.tsx:99](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L99)
+`Promise`<`boolean`\>
+
+#### Defined in
+
+[index.ts:102](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L102)
 
 ___
 
 ### getPersistedUriPermissions
 
-▸ **getPersistedUriPermissions**(): *Promise*<string[]\>
+▸ **getPersistedUriPermissions**(): `Promise`<`string`[]\>
 
 There is a limit to the number of uri permissions your app can persist. Get a list of all the persisted document tree uris so you are remove the ones you are not using or perform other operations.
 
-**Returns:** *Promise*<string[]\>
+#### Returns
 
-Defined in: [index.tsx:54](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L54)
+`Promise`<`string`[]\>
+
+#### Defined in
+
+[index.ts:56](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L56)
 
 ___
 
 ### listFiles
 
-▸ **listFiles**(`uri`: *string*): *Promise*<[*FileType*](#filetype)[]\>
+▸ **listFiles**(`uri`): `Promise`<[`FileType`](#filetype)[]\>
 
 List all files and folders in a directory uri
 
@@ -167,17 +189,21 @@ List all files and folders in a directory uri
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `uri` | *string* | Path to a directory. |
+| `uri` | `string` | Path to a directory. |
 
-**Returns:** *Promise*<[*FileType*](#filetype)[]\>
+#### Returns
 
-Defined in: [index.tsx:72](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L72)
+`Promise`<[`FileType`](#filetype)[]\>
+
+#### Defined in
+
+[index.ts:74](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L74)
 
 ___
 
 ### openDocument
 
-▸ **openDocument**(`readData`: *boolean*): *Promise*<[*FileType*](#filetype)\>
+▸ **openDocument**(`readData`, `encoding`): `Promise`<[`FileType`](#filetype)\>
 
 Open Document picker for the user to select a file.
 
@@ -185,35 +211,44 @@ Open Document picker for the user to select a file.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `readData` | *boolean* | Do you want to read data from the user specified file? |
+| `readData` | `boolean` | Do you want to read data from the user specified file? |
+| `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding for the file you are reading. |
 
-**Returns:** *Promise*<[*FileType*](#filetype)\>
+#### Returns
 
-Defined in: [index.tsx:46](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L46)
+`Promise`<[`FileType`](#filetype)\>
+
+#### Defined in
+
+[index.ts:48](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L48)
 
 ___
 
 ### openDocumentTree
 
-▸ **openDocumentTree**(`persist`:*boolean*): *Promise*<[*FileType*](#filetype)\>
+▸ **openDocumentTree**(`persist`): `Promise`<[`FileType`](#filetype)\>
 
 Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `persist` | *boolean* | Persist permissions for selected directory for later use |
+| Name | Type |
+| :------ | :------ |
+| `persist` | `boolean` |
 
-**Returns:** *Promise*<[*FileType*](#filetype)\>
+#### Returns
 
-Defined in: [index.tsx:25](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L25)
+`Promise`<[`FileType`](#filetype)\>
+
+#### Defined in
+
+[index.ts:26](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L26)
 
 ___
 
 ### readFile
 
-▸ **readFile**(`uri`: *string*): *Promise*<string\>
+▸ **readFile**(`uri`, `encoding`): `Promise`<`string`\>
 
 Read file at a given path. The path of the file must be a document tree uri.
 
@@ -221,17 +256,22 @@ Read file at a given path. The path of the file must be a document tree uri.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `uri` | *string* | Path to the file you want to read. |
+| `uri` | `string` | Path to the file you want to read. |
+| `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding for the file you are reading. |
 
-**Returns:** *Promise*<string\>
+#### Returns
 
-Defined in: [index.tsx:81](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L81)
+`Promise`<`string`\>
+
+#### Defined in
+
+[index.ts:84](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L84)
 
 ___
 
 ### releasePersistableUriPermission
 
-▸ **releasePersistableUriPermission**(`uri`: *string*): *Promise*<void\>
+▸ **releasePersistableUriPermission**(`uri`): `Promise`<`void`\>
 
 Remove a uri from persisted uri list.
 
@@ -239,17 +279,21 @@ Remove a uri from persisted uri list.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `uri` | *string* | The uri you want to remove from persisted uri permissions. |
+| `uri` | `string` | The uri you want to remove from persisted uri permissions. |
 
-**Returns:** *Promise*<void\>
+#### Returns
 
-Defined in: [index.tsx:63](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L63)
+`Promise`<`void`\>
+
+#### Defined in
+
+[index.ts:65](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L65)
 
 ___
 
 ### rename
 
-▸ **rename**(`uri`: *string*, `name`: *string*): *Promise*<string\>
+▸ **rename**(`uri`, `name`): `Promise`<`string`\>
 
 Rename a file or directory at the given path.
 
@@ -257,50 +301,65 @@ Rename a file or directory at the given path.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `uri` | *string* | Path to the file or directory to rename |
-| `name` | *string* | New name for the file or directory |
+| `uri` | `string` | Path to the file or directory to rename |
+| `name` | `string` | New name for the file or directory |
 
-**Returns:** *Promise*<string\>
+#### Returns
 
-Defined in: [index.tsx:91](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L91)
+`Promise`<`string`\>
+
+#### Defined in
+
+[index.ts:94](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L94)
+
+___
+
+### stat
+
+▸ **stat**(`path`): `Promise`<`any`\>
+
+Get details for a file/directory at a given uri.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `path` | `string` | Uri of the parent directory |
+
+#### Returns
+
+`Promise`<`any`\>
+
+#### Defined in
+
+[index.ts:145](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L145)
 
 ___
 
 ### writeFile
 
-▸ **writeFile**(`path`: *string*, `fileName`: *string*, `mime`: *string*, `data`: *string*, `encoding`: ``"utf8"`` \| ``"base64"`` \| ``"ascii"``, `append`: *boolean*): *Promise*<string\>
+▸ **writeFile**(`path`, `fileName`, `mime`, `data`, `encoding`, `append`): `Promise`<`string`\>
 
-Write to a file at the given directory. If the file does not exist, it will be created.
+Write to a file at the give directory. If the file does not exist, it will be created.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path`     | *string* | Uri of the directory |
-| `fileName` | *string* | Name of the file |
-| `mime` | *string* | Mime of the file. eg image/jpeg |
-| `data` | *string* | Data you want to write |
+| `path` | `string` | Uri of the directory |
+| `fileName` | `string` | Name of the file |
+| `mime` | `string` | Mime of the file. eg image/jpeg |
+| `data` | `string` | Data you want to write |
 | `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding of the data you are writing. |
-| `append` | *boolean* | Should the data be appended to the existing data in file? |
+| `append` | `boolean` | Should the data be appended to the existing data in file? |
 
-**Returns:** *Promise*<string\>
+#### Returns
 
-Defined in: [index.tsx:112](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L112)
+`Promise`<`string`\>
 
-___
+#### Defined in
 
-▸ **stat**(`path`: *string*, ): *Promise*<[*FileType*](#filetype)\>
-
-Get info for a file/directory at a given uri.
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `path`     | *string* | Uri of the file/directory |
-
-**Returns:** *Promise*<[*FileType*](#filetype)\>
-
-Defined in: [index.tsx:112](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/15e8070/index.ts#L144)
+[index.ts:125](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L125)
 
 ## Thanks to 
 - [rn-fetch-blob](https://github.com/joltup/rn-fetch-blob) for the amazing library. Some part of code is taken from there.

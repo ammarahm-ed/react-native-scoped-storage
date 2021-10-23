@@ -138,7 +138,7 @@ export async function createFile(path: string, fileName: string, mime: string): 
 }
 
 /**
- * Get info for a file/directory at a given uri.
+ * Get details for a file/directory at a given uri.
  * @param path Uri of the parent directory
  */
 export async function stat(path:string) {

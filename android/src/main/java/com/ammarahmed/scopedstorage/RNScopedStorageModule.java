@@ -223,7 +223,11 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                         params.putString("type", dir.isDirectory() ? "directory" : "file");
                         params.putDouble("lastModified", dir.lastModified());
                         promise.resolve(params);
+                    } else {
+                        promise.resolve(null);
                     }
+                } else {
+                  promise.resolve(null); 
                 }
                 reactContext.removeActivityEventListener(activityEventListener);
                 activityEventListener = null;
@@ -290,7 +294,11 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                         }
                         params.putDouble("lastModified", dir.lastModified());
                         promise.resolve(params);
+                    } else {
+                        promise.resolve(null);
                     }
+                } else {
+                        promise.resolve(null);
                 }
                 reactContext.removeActivityEventListener(activityEventListener);
                 activityEventListener = null;
@@ -360,7 +368,11 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
 
                         promise.resolve(params);
 
+                    } else {
+                        promise.resolve(null);
                     }
+                } else {
+                        promise.resolve(null);
                 }
                 reactContext.removeActivityEventListener(activityEventListener);
                 activityEventListener = null;

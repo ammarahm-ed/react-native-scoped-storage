@@ -23,6 +23,57 @@ or
 npm install react-native-scoped-storage
 ```
 
+## How this works
+Unlike regular file storage on android, scoped storage works differently in that you can only have access to those parts of user's phone storage where the user has allowed you to read/write. Let's see an example:
+
+We will ask the user to give us permission to a folder on their phone were we can read/write data. This folder can be anywhere in the phone. For this purpose will will launch the phone's file manager
+
+```js
+import * as ScopedStorage from "react-native-scoped-storage"
+
+let dir = await ScopedStorage.openDocumentTree(true);
+```
+
+Once the user selects a directory, we will recieve the information about the directory and its `uri`. Now we can use this `uri` to read/write.
+
+```js
+await ScopedStorage.writeFile(dir.uri,"myimage.png","image/png",imageData,"base64");
+
+// We can store this directory in AsyncStorage for later use.
+await AsyncStorage.setItem('userMediaDirectory',JSON.stringify(dir));
+```
+And later if we want to access the uris where we have access to read/write:
+```js
+
+// Get the directory we requested earlier
+let dir = await AsyncStorage.getItem("userMediaDirectory");
+dir = JSON.parse(dir);
+
+// Get list of persisted Uris
+const persistedUris = await ScopedStorage.getPersistedUriPermissions();
+
+// Check if the directory uri exists in the list of uris where we have access to read/write.
+if (persistedUris.indexOf(dir.uri) !== -1) {
+
+    // If uri is found, we can proceed to write/read data.
+    await ScopedStorage.writeFile(dir.uri,"myimage.png","image/png",imageData,"base64");
+} else {
+    // We can request for permission again and store the new directory if access has been revoked by user here.
+}
+
+```
+### Asking for directory to store file everytime
+This works similar to it does in the browser, if you try to save an image or any asset from the webpage, it will ask you for a location where this file should be stored everytime.
+
+```js
+import * as ScopedStorage from "react-native-scoped-storage"
+
+let file = await ScopedStorage.createDocument("myimage.png","image/png",imageBase64Data,"base64");
+
+// Remember that the returned file can have a different name than you provide because user can change it upon saving to a folder.
+```
+
+
 ## Table of contents
 
 ### Type aliases

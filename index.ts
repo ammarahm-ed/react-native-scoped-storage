@@ -107,9 +107,9 @@ export async function deleteFile(uri: string): Promise<boolean> {
  * @param path Uri of the parent directory
  * @param dirName Name of the new directory
  */
-export async function createDirectory(path: string, dirName: string): Promise<FileType> {
+export async function createDirectory(uri: string, dirName: string): Promise<FileType> {
 
-  return await RNScopedStorage.createDirectory(path, dirName);
+  return await RNScopedStorage.createDirectory(uri, dirName);
 
 }
 /**
@@ -121,9 +121,9 @@ export async function createDirectory(path: string, dirName: string): Promise<Fi
  * @param encoding Encoding of the data you are writing.
  * @param append Should the data be appended to the existing data in file?
  */
-export async function writeFile(path: string, fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii", append: boolean): Promise<string> {
+export async function writeFile(uri: string, fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii", append: boolean): Promise<string> {
 
-    return await RNScopedStorage.writeFile(path, fileName, mime, data, encoding, append);
+    return await RNScopedStorage.writeFile(uri, fileName, mime, data, encoding, append);
 
 }
 /**
@@ -132,15 +132,15 @@ export async function writeFile(path: string, fileName: string, mime: string, da
  * @param fileName Name of the new file.
  * @param mime Mime type of the file, e.g. image/jpeg
  */
-export async function createFile(path: string, fileName: string, mime: string): Promise<FileType> {
+export async function createFile(uri: string, fileName: string, mime: string): Promise<FileType> {
 
-    return await RNScopedStorage.createFile(path, fileName, mime);
+    return await RNScopedStorage.createFile(uri, fileName, mime);
 }
 
 /**
  * Get details for a file/directory at a given uri.
  * @param path Uri of the parent directory
  */
-export async function stat(path:string) {
-    return await RNScopedStorage.stat(path);
+export async function stat(uri:string) {
+    return await RNScopedStorage.stat(uri);
 }

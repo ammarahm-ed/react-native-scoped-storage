@@ -122,7 +122,7 @@ let file = await ScopedStorage.createDocument("myimage.png","image/png",imageBas
 
 ### createDirectory
 
-▸ **createDirectory**(`path`, `dirName`): `Promise`<[`FileType`](#filetype)\>
+▸ **createDirectory**(`uri`, `dirName`): `Promise`<[`FileType`](#filetype)\>
 
 Create a directory at the given path.
 
@@ -130,7 +130,7 @@ Create a directory at the given path.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | `string` | Uri of the parent directory |
+| `uri` | `string` | Uri of the parent directory |
 | `dirName` | `string` | Name of the new directory |
 
 #### Returns
@@ -170,7 +170,7 @@ ___
 
 ### createFile
 
-▸ **createFile**(`path`, `fileName`, `mime`): `Promise`<[`FileType`](#filetype)\>
+▸ **createFile**(`uri`, `fileName`, `mime`): `Promise`<[`FileType`](#filetype)\>
 
 Create a new file at the given directory.
 
@@ -178,7 +178,7 @@ Create a new file at the given directory.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | `string` | Uri of the parent directory |
+| `uri` | `string` | Uri of the parent directory |
 | `fileName` | `string` | Name of the new file. |
 | `mime` | `string` | Mime type of the file, e.g. image/jpeg |
 
@@ -367,7 +367,7 @@ ___
 
 ### stat
 
-▸ **stat**(`path`): `Promise`<`any`\>
+▸ **stat**(`uri`): `Promise`<`any`\>
 
 Get details for a file/directory at a given uri.
 
@@ -375,7 +375,7 @@ Get details for a file/directory at a given uri.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | `string` | Uri of the parent directory |
+| `uri` | `string` | Uri of the parent directory |
 
 #### Returns
 
@@ -389,7 +389,7 @@ ___
 
 ### writeFile
 
-▸ **writeFile**(`path`, `fileName`, `mime`, `data`, `encoding`, `append`): `Promise`<`string`\>
+▸ **writeFile**(`uri`, `fileName`, `mime`, `data`, `encoding`, `append`): `Promise`<`string`\>
 
 Write to a file at the give directory. If the file does not exist, it will be created.
 
@@ -397,7 +397,7 @@ Write to a file at the give directory. If the file does not exist, it will be cr
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | `string` | Uri of the directory |
+| `uri` | `string` | Uri of the directory |
 | `fileName` | `string` | Name of the file |
 | `mime` | `string` | Mime of the file. eg image/jpeg |
 | `data` | `string` | Data you want to write |

@@ -22,7 +22,7 @@ export type FileType = {
 /**
  * Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
  */
-export async function openDocumentTree(persist: boolean): Promise<FileType> {
+export async function openDocumentTree(persist = false): Promise<FileType> {
   return await RNScopedStorage.openDocumentTree(persist);
 }
 
@@ -37,9 +37,14 @@ export async function createDocument(
   fileName: string,
   mime: string,
   data: string,
-  encoding: "utf8" | "base64" | "ascii"
+  encoding?: "utf8" | "base64" | "ascii"
 ): Promise<FileType> {
-  return await RNScopedStorage.createDocument(fileName, mime, data, encoding);
+  return await RNScopedStorage.createDocument(
+    fileName,
+    mime,
+    data,
+    encoding || "utf8"
+  );
 }
 
 /**
@@ -48,10 +53,10 @@ export async function createDocument(
  * @param encoding Encoding for the file you are reading.
  */
 export async function openDocument(
-  readData: boolean,
-  encoding: "utf8" | "base64" | "ascii"
+  readData = false,
+  encoding?: "utf8" | "base64" | "ascii"
 ): Promise<FileType> {
-  return RNScopedStorage.openDocument(readData, encoding);
+  return RNScopedStorage.openDocument(readData, encoding || "utf8");
 }
 
 /**
@@ -84,9 +89,9 @@ export async function listFiles(uri: string): Promise<FileType[]> {
  */
 export async function readFile(
   uri: string,
-  encoding: "utf8" | "base64" | "ascii"
+  encoding?: "utf8" | "base64" | "ascii"
 ): Promise<string> {
-  return await RNScopedStorage.readFile(uri, encoding);
+  return await RNScopedStorage.readFile(uri, encoding || "utf8");
 }
 
 /**
@@ -129,15 +134,15 @@ export async function writeFile(
   fileName: string,
   mime: string,
   data: string,
-  encoding: "utf8" | "base64" | "ascii",
-  append: boolean
+  encoding?: "utf8" | "base64" | "ascii",
+  append = false
 ): Promise<string> {
   return await RNScopedStorage.writeFile(
     uri,
     fileName,
     mime,
     data,
-    encoding,
+    encoding || "utf8",
     append
   );
 }

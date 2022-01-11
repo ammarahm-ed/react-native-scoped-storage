@@ -34,12 +34,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { NativeModules } from 'react-native';
+import { NativeModules } from "react-native";
 var RNScopedStorage = NativeModules.RNScopedStorage;
 /**
  * Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
  */
 export function openDocumentTree(persist) {
+    if (persist === void 0) { persist = false; }
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -60,7 +61,7 @@ export function createDocument(fileName, mime, data, encoding) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, RNScopedStorage.createDocument(fileName, mime, data, encoding)];
+                case 0: return [4 /*yield*/, RNScopedStorage.createDocument(fileName, mime, data, encoding || "utf8")];
                 case 1: return [2 /*return*/, _a.sent()];
             }
         });
@@ -72,9 +73,10 @@ export function createDocument(fileName, mime, data, encoding) {
  * @param encoding Encoding for the file you are reading.
  */
 export function openDocument(readData, encoding) {
+    if (readData === void 0) { readData = false; }
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            return [2 /*return*/, RNScopedStorage.openDocument(readData, encoding)];
+            return [2 /*return*/, RNScopedStorage.openDocument(readData, encoding || "utf8")];
         });
     });
 }
@@ -123,7 +125,7 @@ export function readFile(uri, encoding) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, RNScopedStorage.readFile(uri, encoding)];
+                case 0: return [4 /*yield*/, RNScopedStorage.readFile(uri, encoding || "utf8")];
                 case 1: return [2 /*return*/, _a.sent()];
             }
         });
@@ -183,10 +185,11 @@ export function createDirectory(uri, dirName) {
  * @param append Should the data be appended to the existing data in file?
  */
 export function writeFile(uri, fileName, mime, data, encoding, append) {
+    if (append === void 0) { append = false; }
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, RNScopedStorage.writeFile(uri, fileName, mime, data, encoding, append)];
+                case 0: return [4 /*yield*/, RNScopedStorage.writeFile(uri, fileName, mime, data, encoding || "utf8", append)];
                 case 1: return [2 /*return*/, _a.sent()];
             }
         });

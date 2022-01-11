@@ -16,7 +16,7 @@ export declare type FileType = {
 /**
  * Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
  */
-export declare function openDocumentTree(persist: boolean): Promise<FileType>;
+export declare function openDocumentTree(persist?: boolean): Promise<FileType>;
 /**
  * Open Document picker to create a file at the user specified location.
  * @param fileName Name of the file to create.
@@ -24,13 +24,13 @@ export declare function openDocumentTree(persist: boolean): Promise<FileType>;
  * @param data Data to write to the file once it is created.
  * @param encoding Encoding of the dat you are writing.
  */
-export declare function createDocument(fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii"): Promise<FileType>;
+export declare function createDocument(fileName: string, mime: string, data: string, encoding?: "utf8" | "base64" | "ascii"): Promise<FileType>;
 /**
  * Open Document picker for the user to select a file.
  * @param readData Do you want to read data from the user specified file?
  * @param encoding Encoding for the file you are reading.
  */
-export declare function openDocument(readData: boolean, encoding: "utf8" | "base64" | "ascii"): Promise<FileType>;
+export declare function openDocument(readData?: boolean, encoding?: "utf8" | "base64" | "ascii"): Promise<FileType>;
 /**
  * There is a limit to the number of uri permissions your app can persist. Get a list of all the persisted document tree uris so you are remove the ones you are not using or perform other operations.
  */
@@ -50,7 +50,7 @@ export declare function listFiles(uri: string): Promise<FileType[]>;
  * @param uri Path to the file you want to read.
  * @param encoding Encoding for the file you are reading.
  */
-export declare function readFile(uri: string, encoding: "utf8" | "base64" | "ascii"): Promise<string>;
+export declare function readFile(uri: string, encoding?: "utf8" | "base64" | "ascii"): Promise<string>;
 /**
  * Rename a file or directory at the given path.
  * @param uri Path to the file or directory to rename
@@ -77,7 +77,7 @@ export declare function createDirectory(uri: string, dirName: string): Promise<F
  * @param encoding Encoding of the data you are writing.
  * @param append Should the data be appended to the existing data in file?
  */
-export declare function writeFile(uri: string, fileName: string, mime: string, data: string, encoding: "utf8" | "base64" | "ascii", append: boolean): Promise<string>;
+export declare function writeFile(uri: string, fileName: string, mime: string, data: string, encoding?: "utf8" | "base64" | "ascii", append?: boolean): Promise<string>;
 /**
  * Create a new file at the given directory.
  * @param path Uri of the parent directory

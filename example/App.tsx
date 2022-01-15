@@ -39,13 +39,14 @@ const App = () => {
           try {
             let dir = await ScopedStorage.openDocumentTree(true);
             let text = 'Hello world';
-
-            await ScopedStorage.writeFile(
-              dir.uri,
-              'helloworld.txt',
-              'text/plain',
-              text,
-            );
+            if (dir) {
+              await ScopedStorage.writeFile(
+                dir.uri,
+                'helloworld.txt',
+                'text/plain',
+                text,
+              );
+            }
           } catch (e) {
             console.log(e);
           }
@@ -56,7 +57,8 @@ const App = () => {
       <Button
         onPress={async () => {
           try {
-            await ScopedStorage.openDocument();
+            let file = await ScopedStorage.openDocument(true, 'utf8');
+            console.log(file);
           } catch (e) {
             console.log(e);
           }
@@ -72,7 +74,7 @@ const App = () => {
               'text/plain',
               'hello world',
             );
-            console.log('File saved!',file);
+            console.log('File saved!', file);
           } catch (e) {
             console.log(e);
           }

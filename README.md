@@ -6,11 +6,16 @@
 <img src="https://img.shields.io/npm/v/react-native-scoped-storage?color=orange&style=flat-square"/>
 </a>
 
-Starting in Android 11, apps that use the scoped storage model can access only their own app-specific cache files. As soon as React Native targets API 30, all of us will have to use Scoped Storage to access any files stored in the sdcard/phone storage. This library provides an API for react-native devs to start testing out scoped storage in their apps. Remember, you do not need `WRITE_EXTERNAL_STORAGE` permission in you `AndroidManifest.xml` file using this library. 
+Since the release of Android 10, Google has made Scoped Storage the default way to access and read/write files on an Android device but up until Android 11, it was possible to override this by putting android:requestLegacyExternalStorage="true" in AndroidManifest.xml.
 
-Scoped storage allows you to prompt the user that you need access to some file/folders. The user can the allow access to their desired location. It is your responsibility to store the uri you recieve for later use.
+However, this is changing fast since the start of 2021. Google is enforcing all apps to use Scoped Storage to store or read files on a user's device. This library provides an API for react-native to use scoped storage in their apps. Scoped storage allows you to prompt the user that you need access to some file/folders. The user can the allow access to their desired location. It is your responsibility to store the uri you recieve for later use.  
 
-**Important note**: Until React Native targets API 29, you do not need this library. However you should start testing it out in your apps/projects because soon, we will have to move to this new API for file access.
+Remember, you do not need `WRITE_EXTERNAL_STORAGE` permission in you `AndroidManifest.xml` file using this library. 
+
+Until React Native targets API 29, you do not need this library. But if you are targeting API 30, it's not possible to access user's files and folders without scoped storage.
+
+**Read my blog:** [Scoped Storage in React Native: New Android 10 API for File System Access](https://blog.notesnook.com/scoped-storage-in-react-native/)
+
 
 ## Getting started
 Install the library

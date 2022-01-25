@@ -83,23 +83,24 @@ let file = await ScopedStorage.createDocument("myimage.png","image/png",imageBas
 
 ### Type aliases
 
-- [FileType](#filetype)
+- [FileType](modules.md#filetype)
 
 ### Functions
 
-- [createDirectory](#createdirectory)
-- [createDocument](#createdocument)
-- [createFile](#createfile)
-- [deleteFile](#deletefile)
-- [getPersistedUriPermissions](#getpersisteduripermissions)
-- [listFiles](#listfiles)
-- [openDocument](#opendocument)
-- [openDocumentTree](#opendocumenttree)
-- [readFile](#readfile)
-- [releasePersistableUriPermission](#releasepersistableuripermission)
-- [rename](#rename)
-- [stat](#stat)
-- [writeFile](#writefile)
+- [copyFile](modules.md#copyfile)
+- [createDirectory](modules.md#createdirectory)
+- [createDocument](modules.md#createdocument)
+- [createFile](modules.md#createfile)
+- [deleteFile](modules.md#deletefile)
+- [getPersistedUriPermissions](modules.md#getpersisteduripermissions)
+- [listFiles](modules.md#listfiles)
+- [openDocument](modules.md#opendocument)
+- [openDocumentTree](modules.md#opendocumenttree)
+- [readFile](modules.md#readfile)
+- [releasePersistableUriPermission](modules.md#releasepersistableuripermission)
+- [rename](modules.md#rename)
+- [stat](modules.md#stat)
+- [writeFile](modules.md#writefile)
 
 ## Type aliases
 
@@ -109,91 +110,115 @@ let file = await ScopedStorage.createDocument("myimage.png","image/png",imageBas
 
 #### Type declaration
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `data` | `string` | data read from the file |
-| `lastModified` | `number` | Last modified date of the file or directory |
-| `mime` | `string` | mime type of the file |
-| `name` | `string` | Name of the file or directory |
-| `path` | `string` | Storage path for the file |
-| `type` | ``"file"`` \| ``"directory"`` | - |
-| `uri` | `string` | Document Tree Uri for the file or directory |
+| Name           | Type                          | Description                                 |
+|:---------------|:------------------------------|:--------------------------------------------|
+| `data`         | `string`                      | data read from the file                     |
+| `lastModified` | `number`                      | Last modified date of the file or directory |
+| `mime`         | `string`                      | mime type of the file                       |
+| `name`         | `string`                      | Name of the file or directory               |
+| `path`         | `string`                      | Storage path for the file                   |
+| `type`         | ``"file"`` \| ``"directory"`` | -                                           |
+| `uri`          | `string`                      | Document Tree Uri for the file or directory |
 
 #### Defined in
 
-[index.ts:6](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L6)
+[index.ts:5](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L5)
 
 ## Functions
 
-### createDirectory
+### copyFile
 
-▸ **createDirectory**(`uri`, `dirName`): `Promise`<[`FileType`](#filetype)\>
-
-Create a directory at the given path.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `uri` | `string` | Uri of the parent directory |
-| `dirName` | `string` | Name of the new directory |
-
-#### Returns
-
-`Promise`<[`FileType`](#filetype)\>
-
-#### Defined in
-
-[index.ts:111](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L111)
-
-___
-
-### createDocument
-
-▸ **createDocument**(`fileName`, `mime`, `data`, `encoding`): `Promise`<[`FileType`](#filetype)\>
-
-Open Document picker to create a file at the user specified location.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `fileName` | `string` | Name of the file to create. |
-| `mime` | `string` | mime of the file to create. eg image/jpeg |
-| `data` | `string` | Data to write to the file once it is created. |
-| `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding of the dat you are writing. |
-
-#### Returns
-
-`Promise`<[`FileType`](#filetype)\>
-
-#### Defined in
-
-[index.ts:38](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L38)
-
-___
-
-### createFile
-
-▸ **createFile**(`uri`, `fileName`, `mime`): `Promise`<[`FileType`](#filetype)\>
+▸ **copyFile**(`source`, `destination`, `callback`): `Promise`<`void`\>
 
 Create a new file at the given directory.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `uri` | `string` | Uri of the parent directory |
-| `fileName` | `string` | Name of the new file. |
-| `mime` | `string` | Mime type of the file, e.g. image/jpeg |
+| Name          | Type         | Description                                           |
+|:--------------|:-------------|:------------------------------------------------------|
+| `source`      | `string`     | Source file (Supports file:// & content:// uris)      |
+| `destination` | `string`     | Destination file (Supports file:// & content:// uris) |
+| `callback`    | () => `void` | -                                                     |
 
 #### Returns
 
-`Promise`<[`FileType`](#filetype)\>
+`Promise`<`void`\>
 
 #### Defined in
 
-[index.ts:136](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L136)
+[index.ts:170](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L170)
+
+___
+
+### createDirectory
+
+▸ **createDirectory**(`uri`, `dirName`): `Promise`<[`FileType`](modules.md#filetype)\>
+
+Create a directory at the given path.
+
+#### Parameters
+
+| Name      | Type     | Description               |
+|:----------|:---------|:--------------------------|
+| `uri`     | `string` | -                         |
+| `dirName` | `string` | Name of the new directory |
+
+#### Returns
+
+`Promise`<[`FileType`](modules.md#filetype)\>
+
+#### Defined in
+
+[index.ts:117](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L117)
+
+___
+
+### createDocument
+
+▸ **createDocument**(`fileName`, `mime`, `data`, `encoding?`): `Promise`<[`FileType`](modules.md#filetype)\>
+
+Open Document picker to create a file at the user specified location.
+
+#### Parameters
+
+| Name        | Type                                      | Description                                   |
+|:------------|:------------------------------------------|:----------------------------------------------|
+| `fileName`  | `string`                                  | Name of the file to create.                   |
+| `mime`      | `string`                                  | mime of the file to create. eg image/jpeg     |
+| `data`      | `string`                                  | Data to write to the file once it is created. |
+| `encoding?` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding of the dat you are writing.          |
+
+#### Returns
+
+`Promise`<[`FileType`](modules.md#filetype)\>
+
+#### Defined in
+
+[index.ts:36](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L36)
+
+___
+
+### createFile
+
+▸ **createFile**(`uri`, `fileName`, `mime`): `Promise`<[`FileType`](modules.md#filetype)\>
+
+Create a new file at the given directory.
+
+#### Parameters
+
+| Name       | Type     | Description                            |
+|:-----------|:---------|:---------------------------------------|
+| `uri`      | `string` | -                                      |
+| `fileName` | `string` | Name of the new file.                  |
+| `mime`     | `string` | Mime type of the file, e.g. image/jpeg |
+
+#### Returns
+
+`Promise`<[`FileType`](modules.md#filetype)\>
+
+#### Defined in
+
+[index.ts:155](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L155)
 
 ___
 
@@ -205,8 +230,8 @@ Delete a file or directory at the given path.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name  | Type     | Description                             |
+|:------|:---------|:----------------------------------------|
 | `uri` | `string` | Path to the file or directory to delete |
 
 #### Returns
@@ -215,7 +240,7 @@ Delete a file or directory at the given path.
 
 #### Defined in
 
-[index.ts:102](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L102)
+[index.ts:109](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L109)
 
 ___
 
@@ -231,89 +256,89 @@ There is a limit to the number of uri permissions your app can persist. Get a li
 
 #### Defined in
 
-[index.ts:56](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L56)
+[index.ts:65](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L65)
 
 ___
 
 ### listFiles
 
-▸ **listFiles**(`uri`): `Promise`<[`FileType`](#filetype)[]\>
+▸ **listFiles**(`uri`): `Promise`<[`FileType`](modules.md#filetype)[]\>
 
 List all files and folders in a directory uri
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name  | Type     | Description          |
+|:------|:---------|:---------------------|
 | `uri` | `string` | Path to a directory. |
 
 #### Returns
 
-`Promise`<[`FileType`](#filetype)[]\>
+`Promise`<[`FileType`](modules.md#filetype)[]\>
 
 #### Defined in
 
-[index.ts:74](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L74)
+[index.ts:81](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L81)
 
 ___
 
 ### openDocument
 
-▸ **openDocument**(`readData`, `encoding`): `Promise`<[`FileType`](#filetype)\>
+▸ **openDocument**(`readData?`, `encoding?`): `Promise`<[`FileType`](modules.md#filetype)\>
 
 Open Document picker for the user to select a file.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `readData` | `boolean` | Do you want to read data from the user specified file? |
-| `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding for the file you are reading. |
+| Name        | Type                                      | Default value | Description                                            |
+|:------------|:------------------------------------------|:--------------|:-------------------------------------------------------|
+| `readData`  | `boolean`                                 | `false`       | Do you want to read data from the user specified file? |
+| `encoding?` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | `undefined`   | Encoding for the file you are reading.                 |
 
 #### Returns
 
-`Promise`<[`FileType`](#filetype)\>
+`Promise`<[`FileType`](modules.md#filetype)\>
 
 #### Defined in
 
-[index.ts:48](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L48)
+[index.ts:55](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L55)
 
 ___
 
 ### openDocumentTree
 
-▸ **openDocumentTree**(`persist`): `Promise`<[`FileType`](#filetype)\>
+▸ **openDocumentTree**(`persist?`): `Promise`<[`FileType`](modules.md#filetype)\>
 
 Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `persist` | `boolean` |
+| Name      | Type      | Default value |
+|:----------|:----------|:--------------|
+| `persist` | `boolean` | `false`       |
 
 #### Returns
 
-`Promise`<[`FileType`](#filetype)\>
+`Promise`<[`FileType`](modules.md#filetype)\>
 
 #### Defined in
 
-[index.ts:26](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L26)
+[index.ts:25](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L25)
 
 ___
 
 ### readFile
 
-▸ **readFile**(`uri`, `encoding`): `Promise`<`string`\>
+▸ **readFile**(`uri`, `encoding?`): `Promise`<`string`\>
 
 Read file at a given path. The path of the file must be a document tree uri.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `uri` | `string` | Path to the file you want to read. |
-| `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding for the file you are reading. |
+| Name        | Type                                      | Description                            |
+|:------------|:------------------------------------------|:---------------------------------------|
+| `uri`       | `string`                                  | Path to the file you want to read.     |
+| `encoding?` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding for the file you are reading. |
 
 #### Returns
 
@@ -321,7 +346,7 @@ Read file at a given path. The path of the file must be a document tree uri.
 
 #### Defined in
 
-[index.ts:84](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L84)
+[index.ts:90](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L90)
 
 ___
 
@@ -333,8 +358,8 @@ Remove a uri from persisted uri list.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name  | Type     | Description                                                |
+|:------|:---------|:-----------------------------------------------------------|
 | `uri` | `string` | The uri you want to remove from persisted uri permissions. |
 
 #### Returns
@@ -343,7 +368,7 @@ Remove a uri from persisted uri list.
 
 #### Defined in
 
-[index.ts:65](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L65)
+[index.ts:73](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L73)
 
 ___
 
@@ -355,10 +380,10 @@ Rename a file or directory at the given path.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `uri` | `string` | Path to the file or directory to rename |
-| `name` | `string` | New name for the file or directory |
+| Name   | Type     | Description                             |
+|:-------|:---------|:----------------------------------------|
+| `uri`  | `string` | Path to the file or directory to rename |
+| `name` | `string` | New name for the file or directory      |
 
 #### Returns
 
@@ -366,7 +391,7 @@ Rename a file or directory at the given path.
 
 #### Defined in
 
-[index.ts:94](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L94)
+[index.ts:102](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L102)
 
 ___
 
@@ -378,9 +403,9 @@ Get details for a file/directory at a given uri.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `uri` | `string` | Uri of the parent directory |
+| Name  | Type     |
+|:------|:---------|
+| `uri` | `string` |
 
 #### Returns
 
@@ -388,26 +413,26 @@ Get details for a file/directory at a given uri.
 
 #### Defined in
 
-[index.ts:145](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L145)
+[index.ts:182](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L182)
 
 ___
 
 ### writeFile
 
-▸ **writeFile**(`uri`, `fileName`, `mime`, `data`, `encoding`, `append`): `Promise`<`string`\>
+▸ **writeFile**(`uri`, `data`, `fileName?`, `mime?`, `encoding?`, `append?`): `Promise`<`string`\>
 
 Write to a file at the give directory. If the file does not exist, it will be created.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `uri` | `string` | Uri of the directory |
-| `fileName` | `string` | Name of the file |
-| `mime` | `string` | Mime of the file. eg image/jpeg |
-| `data` | `string` | Data you want to write |
-| `encoding` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | Encoding of the data you are writing. |
-| `append` | `boolean` | Should the data be appended to the existing data in file? |
+| Name        | Type                                      | Default value | Description                                                                |
+|:------------|:------------------------------------------|:--------------|:---------------------------------------------------------------------------|
+| `uri`       | `string`                                  | `undefined`   | -                                                                          |
+| `data`      | `string`                                  | `undefined`   | Data you want to write                                                     |
+| `fileName?` | `string`                                  | `undefined`   | Name of the file (Optional if writing to an existing file)                 |
+| `mime?`     | `string`                                  | `undefined`   | Mime of the file. eg image/jpeg  (Optional if writing to an existing file) |
+| `encoding?` | ``"utf8"`` \| ``"base64"`` \| ``"ascii"`` | `undefined`   | Encoding of the data you are writing.                                      |
+| `append`    | `boolean`                                 | `false`       | Should the data be appended to the existing data in file?                  |
 
 #### Returns
 
@@ -415,7 +440,7 @@ Write to a file at the give directory. If the file does not exist, it will be cr
 
 #### Defined in
 
-[index.ts:125](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/fc6aac0/index.ts#L125)
+[index.ts:132](https://github.com/ammarahm-ed/react-native-scoped-storage/blob/8e5a6b4/index.ts#L132)
 
 ## Thanks to 
 - [rn-fetch-blob](https://github.com/joltup/rn-fetch-blob) for the amazing library. Some part of code is taken from there.

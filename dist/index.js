@@ -178,13 +178,13 @@ export function createDirectory(uri, dirName) {
 /**
  * Write to a file at the give directory. If the file does not exist, it will be created.
  * @param path Uri of the directory
- * @param fileName Name of the file
- * @param mime Mime of the file. eg image/jpeg
  * @param data Data you want to write
+ * @param fileName Name of the file (Optional if writing to an existing file)
+ * @param mime Mime of the file. eg image/jpeg  (Optional if writing to an existing file)
  * @param encoding Encoding of the data you are writing.
  * @param append Should the data be appended to the existing data in file?
  */
-export function writeFile(uri, fileName, mime, data, encoding, append) {
+export function writeFile(uri, data, fileName, mime, encoding, append) {
     if (append === void 0) { append = false; }
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -208,6 +208,20 @@ export function createFile(uri, fileName, mime) {
                 case 0: return [4 /*yield*/, RNScopedStorage.createFile(uri, fileName, mime)];
                 case 1: return [2 /*return*/, _a.sent()];
             }
+        });
+    });
+}
+/**
+ * Create a new file at the given directory.
+ * @param source Source file (Supports file:// & content:// uris)
+ * @param destination Destination file (Supports file:// & content:// uris)
+ * @param mime Callback to recieve final result
+ */
+export function copyFile(source, destination, callback) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            RNScopedStorage.writeFile(source, destination, callback);
+            return [2 /*return*/];
         });
     });
 }

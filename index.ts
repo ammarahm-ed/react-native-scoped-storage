@@ -123,17 +123,17 @@ export async function createDirectory(
 /**
  * Write to a file at the give directory. If the file does not exist, it will be created.
  * @param path Uri of the directory
- * @param fileName Name of the file
- * @param mime Mime of the file. eg image/jpeg
  * @param data Data you want to write
+ * @param fileName Name of the file (Optional if writing to an existing file)
+ * @param mime Mime of the file. eg image/jpeg  (Optional if writing to an existing file)
  * @param encoding Encoding of the data you are writing.
  * @param append Should the data be appended to the existing data in file?
  */
 export async function writeFile(
   uri: string,
-  fileName: string,
-  mime: string,
   data: string,
+  fileName?: string,
+  mime?: string,
   encoding?: "utf8" | "base64" | "ascii",
   append = false
 ): Promise<string> {
@@ -158,6 +158,21 @@ export async function createFile(
   mime: string
 ): Promise<FileType> {
   return await RNScopedStorage.createFile(uri, fileName, mime);
+}
+
+/**
+ * Create a new file at the given directory.
+ * @param source Source file (Supports file:// & content:// uris)
+ * @param destination Destination file (Supports file:// & content:// uris)
+ * @param mime Callback to recieve final result
+ */
+
+export async function copyFile(
+  source: string,
+  destination: string,
+  callback: () => void
+) {
+  RNScopedStorage.writeFile(source, destination, callback);
 }
 
 /**

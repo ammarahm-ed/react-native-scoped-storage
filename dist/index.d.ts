@@ -71,13 +71,13 @@ export declare function createDirectory(uri: string, dirName: string): Promise<F
 /**
  * Write to a file at the give directory. If the file does not exist, it will be created.
  * @param path Uri of the directory
- * @param fileName Name of the file
- * @param mime Mime of the file. eg image/jpeg
  * @param data Data you want to write
+ * @param fileName Name of the file (Optional if writing to an existing file)
+ * @param mime Mime of the file. eg image/jpeg  (Optional if writing to an existing file)
  * @param encoding Encoding of the data you are writing.
  * @param append Should the data be appended to the existing data in file?
  */
-export declare function writeFile(uri: string, fileName: string, mime: string, data: string, encoding?: "utf8" | "base64" | "ascii", append?: boolean): Promise<string>;
+export declare function writeFile(uri: string, data: string, fileName?: string, mime?: string, encoding?: "utf8" | "base64" | "ascii", append?: boolean): Promise<string>;
 /**
  * Create a new file at the given directory.
  * @param path Uri of the parent directory
@@ -85,6 +85,13 @@ export declare function writeFile(uri: string, fileName: string, mime: string, d
  * @param mime Mime type of the file, e.g. image/jpeg
  */
 export declare function createFile(uri: string, fileName: string, mime: string): Promise<FileType>;
+/**
+ * Create a new file at the given directory.
+ * @param source Source file (Supports file:// & content:// uris)
+ * @param destination Destination file (Supports file:// & content:// uris)
+ * @param mime Callback to recieve final result
+ */
+export declare function copyFile(source: string, destination: string, callback: () => void): Promise<void>;
 /**
  * Get details for a file/directory at a given uri.
  * @param path Uri of the parent directory

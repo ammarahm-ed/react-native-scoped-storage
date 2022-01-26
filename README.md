@@ -83,24 +83,24 @@ let file = await ScopedStorage.createDocument("myimage.png","image/png",imageBas
 
 ### Type aliases
 
-- [FileType](modules.md#filetype)
+- [FileType](#filetype)
 
 ### Functions
 
-- [copyFile](modules.md#copyfile)
-- [createDirectory](modules.md#createdirectory)
-- [createDocument](modules.md#createdocument)
-- [createFile](modules.md#createfile)
-- [deleteFile](modules.md#deletefile)
-- [getPersistedUriPermissions](modules.md#getpersisteduripermissions)
-- [listFiles](modules.md#listfiles)
-- [openDocument](modules.md#opendocument)
-- [openDocumentTree](modules.md#opendocumenttree)
-- [readFile](modules.md#readfile)
-- [releasePersistableUriPermission](modules.md#releasepersistableuripermission)
-- [rename](modules.md#rename)
-- [stat](modules.md#stat)
-- [writeFile](modules.md#writefile)
+- [copyFile](#copyfile)
+- [createDirectory](#createdirectory)
+- [createDocument](#createdocument)
+- [createFile](#createfile)
+- [deleteFile](#deletefile)
+- [getPersistedUriPermissions](#getpersisteduripermissions)
+- [listFiles](#listfiles)
+- [openDocument](#opendocument)
+- [openDocumentTree](#opendocumenttree)
+- [readFile](#readfile)
+- [releasePersistableUriPermission](#releasepersistableuripermission)
+- [rename](#rename)
+- [stat](#stat)
+- [writeFile](#writefile)
 
 ## Type aliases
 
@@ -152,7 +152,7 @@ ___
 
 ### createDirectory
 
-▸ **createDirectory**(`uri`, `dirName`): `Promise`<[`FileType`](modules.md#filetype)\>
+▸ **createDirectory**(`uri`, `dirName`): `Promise`<[`FileType`](#filetype)\>
 
 Create a directory at the given path.
 
@@ -165,7 +165,7 @@ Create a directory at the given path.
 
 #### Returns
 
-`Promise`<[`FileType`](modules.md#filetype)\>
+`Promise`<[`FileType`](#filetype)\>
 
 #### Defined in
 
@@ -175,7 +175,7 @@ ___
 
 ### createDocument
 
-▸ **createDocument**(`fileName`, `mime`, `data`, `encoding?`): `Promise`<[`FileType`](modules.md#filetype)\>
+▸ **createDocument**(`fileName`, `mime`, `data`, `encoding?`): `Promise`<[`FileType`](#filetype)\>
 
 Open Document picker to create a file at the user specified location.
 
@@ -190,7 +190,7 @@ Open Document picker to create a file at the user specified location.
 
 #### Returns
 
-`Promise`<[`FileType`](modules.md#filetype)\>
+`Promise`<[`FileType`](#filetype)\>
 
 #### Defined in
 
@@ -200,7 +200,7 @@ ___
 
 ### createFile
 
-▸ **createFile**(`uri`, `fileName`, `mime`): `Promise`<[`FileType`](modules.md#filetype)\>
+▸ **createFile**(`uri`, `fileName`, `mime`): `Promise`<[`FileType`](#filetype)\>
 
 Create a new file at the given directory.
 
@@ -214,7 +214,7 @@ Create a new file at the given directory.
 
 #### Returns
 
-`Promise`<[`FileType`](modules.md#filetype)\>
+`Promise`<[`FileType`](#filetype)\>
 
 #### Defined in
 
@@ -262,7 +262,7 @@ ___
 
 ### listFiles
 
-▸ **listFiles**(`uri`): `Promise`<[`FileType`](modules.md#filetype)[]\>
+▸ **listFiles**(`uri`): `Promise`<[`FileType`](#filetype)[]\>
 
 List all files and folders in a directory uri
 
@@ -274,7 +274,7 @@ List all files and folders in a directory uri
 
 #### Returns
 
-`Promise`<[`FileType`](modules.md#filetype)[]\>
+`Promise`<[`FileType`](#filetype)[]\>
 
 #### Defined in
 
@@ -284,7 +284,7 @@ ___
 
 ### openDocument
 
-▸ **openDocument**(`readData?`, `encoding?`): `Promise`<[`FileType`](modules.md#filetype)\>
+▸ **openDocument**(`readData?`, `encoding?`): `Promise`<[`FileType`](#filetype)\>
 
 Open Document picker for the user to select a file.
 
@@ -297,7 +297,7 @@ Open Document picker for the user to select a file.
 
 #### Returns
 
-`Promise`<[`FileType`](modules.md#filetype)\>
+`Promise`<[`FileType`](#filetype)\>
 
 #### Defined in
 
@@ -307,7 +307,7 @@ ___
 
 ### openDocumentTree
 
-▸ **openDocumentTree**(`persist?`): `Promise`<[`FileType`](modules.md#filetype)\>
+▸ **openDocumentTree**(`persist?`): `Promise`<[`FileType`](#filetype)\>
 
 Open the Document Picker to select a folder. Read/Write Permission will be granted to the selected folder.
 
@@ -319,7 +319,7 @@ Open the Document Picker to select a folder. Read/Write Permission will be grant
 
 #### Returns
 
-`Promise`<[`FileType`](modules.md#filetype)\>
+`Promise`<[`FileType`](#filetype)\>
 
 #### Defined in
 

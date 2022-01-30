@@ -166,13 +166,12 @@ export async function createFile(
  * @param destination Destination file (Supports file:// & content:// uris)
  * @param mime Callback to recieve final result
  */
-
 export async function copyFile(
   source: string,
   destination: string,
   callback: () => void
 ) {
-  RNScopedStorage.writeFile(source, destination, callback);
+  RNScopedStorage.copyFile(source, destination, callback);
 }
 
 /**

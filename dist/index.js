@@ -220,7 +220,7 @@ export function createFile(uri, fileName, mime) {
 export function copyFile(source, destination, callback) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            RNScopedStorage.writeFile(source, destination, callback);
+            RNScopedStorage.copyFile(source, destination, callback);
             return [2 /*return*/];
         });
     });

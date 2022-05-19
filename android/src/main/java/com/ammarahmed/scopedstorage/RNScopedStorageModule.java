@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.util.Base64;
 
+import android.os.AsyncTask;
+
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
@@ -812,53 +814,62 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void copyFile(String path, String dest, Callback callback) {
 
-        InputStream in = null;
-        OutputStream out = null;
-        String message = "";
+        AsyncTask.execute(() -> {
+                
+            InputStream in = null;
+            OutputStream out = null;
+            String message = "";
 
-        try {
-            if (!exists(path)) {
-                message = "Source file does not exist";
-                callback.invoke((message));
-                return;
-            }
-            ParcelFileDescriptor inputDescriptor = reactContext.getContentResolver().openFileDescriptor(Uri.parse(path), "rw");
-            in = new FileInputStream(inputDescriptor.getFileDescriptor());
-
-            if (!exists(dest)) {
-                message = "Destination file does not exist. Please create destination file with createFile.";
-                callback.invoke((message));
-                return;
-            }
-
-            ParcelFileDescriptor outputDescriptor = reactContext.getContentResolver().openFileDescriptor(Uri.parse(dest), "rw");
-            out = new FileOutputStream(outputDescriptor.getFileDescriptor());
-
-            byte[] buf = new byte[10240];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-        } catch (Exception err) {
-            message += err.getLocalizedMessage();
-        } finally {
             try {
-                if (in != null) {
-                    in.close();
+                if (!exists(path)) {
+                    message = "Source file does not exist";
+                    callback.invoke((message));
+                    return;
                 }
-                if (out != null) {
-                    out.close();
-                }
-            } catch (Exception e) {
-                message += e.getLocalizedMessage();
-            }
-        }
+                ParcelFileDescriptor inputDescriptor = reactContext.getContentResolver().openFileDescriptor(Uri.parse(path), "rw");
+                in = new FileInputStream(inputDescriptor.getFileDescriptor());
 
-        if (message != "") {
-            callback.invoke(message);
-        } else {
-            callback.invoke();
-        }
+                if (!exists(dest)) {
+                    message = "Destination file does not exist. Please create destination file with createFile.";
+                    callback.invoke((message));
+                    return;
+                }
+
+                ParcelFileDescriptor outputDescriptor = reactContext.getContentResolver().openFileDescriptor(Uri.parse(dest), "rw");
+                out = new FileOutputStream(outputDescriptor.getFileDescriptor());
+
+                byte[] buf = new byte[10240];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            } catch (Exception err) {
+                message += err.getLocalizedMessage();
+            } finally {
+                try {
+                    if (in != null) {
+                        in.close();
+                    }
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (Exception e) {
+                    message += e.getLocalizedMessage();
+                }
+            }
+
+            if (message != "") {
+                callback.invoke(message);
+            } else {
+                callback.invoke();
+            }
+       
+       
+       });
+
+        
+
+        
     }
 
 

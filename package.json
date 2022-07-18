@@ -1,6 +1,6 @@
 {
   "name": "react-native-scoped-storage",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "description": "react-native-scoped-storage",
   "main": "dist/index.js",
   "scripts": {

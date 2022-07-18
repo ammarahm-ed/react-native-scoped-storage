@@ -753,7 +753,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
             DocumentFile file = null;
             DocumentFile dir = DocumentFile.fromTreeUri(reactContext, Uri.parse(path));
 
-            if (dir.isDirectory()) {
+            if (dir != null && dir.isDirectory()) {
 
                 boolean hasPermission = hasPermission(path);
                 if (!hasPermission) {
@@ -761,7 +761,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                     return;
                 }
 
-                if (!dir.getUri().toString().equals(path)) {
+                if (dir.getUri() != null && !dir.getUri().toString().equals(path)) {
                     dir = mkdir(path);
                 }
 
@@ -773,7 +773,7 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
                 file = dir;
             }
 
-            if (!file.exists()) {
+            if (file == null || !file.exists()) {
                 promise.reject("ENOENT", "File could not be created/does not exist");
                 return;
             }

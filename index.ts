@@ -181,3 +181,23 @@ export async function copyFile(
 export async function stat(uri: string) {
   return await RNScopedStorage.stat(uri);
 }
+
+/**
+* Get if file or directory exists given the uri.
+* @param uri Path of target file or directory.
+*/
+export async function exists(uri: string): Promise<boolean>{
+   try {
+    const regex = /[^/]+$/;
+    const match = uri.match(regex);
+    const fileName = match ? match[0] : '';
+    for (const file of await ScopedStorage.listFiles(uri)) {
+      if (file.uri === fileName) {
+        return true;
+      }
+    }
+    return false;
+  } catch (err) {
+    return false;
+  }
+}

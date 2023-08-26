@@ -543,34 +543,35 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
         } catch (Exception e) {
             promise.resolve(null);
         }
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @ReactMethod
     public void readFile(String path, String encoding, final Promise promise) {
-        try {
+        AsyncTask.execute(() -> {
+            try {
 
-            if (!path.startsWith("content://")) {
+                if (!path.startsWith("content://")) {
+                    read(path, encoding, promise);
+                    return;
+                }
+
+                boolean hasPermission = hasPermission(path);
+                if (!hasPermission) {
+                    promise.reject("ENOENT", "'" + path + "'does not have permission to read/write");
+                    return;
+                }
+                DocumentFile dir = DocumentFile.fromTreeUri(reactContext, Uri.parse(path));
+
+                if (!dir.isFile()) {
+                    promise.reject("ENOENT", "'" + path + "'is not a file");
+                    return;
+                }
                 read(path, encoding, promise);
-                return;
+            } catch (Exception e) {
+                promise.reject("EUNSPECIFIED", e.getLocalizedMessage());
             }
-
-            boolean hasPermission = hasPermission(path);
-            if (!hasPermission) {
-                promise.reject("ENOENT", "'" + path + "'does not have permission to read/write");
-                return;
-            }
-            DocumentFile dir = DocumentFile.fromTreeUri(reactContext, Uri.parse(path));
-
-            if (!dir.isFile()) {
-                promise.reject("ENOENT", "'" + path + "'is not a file");
-                return;
-            }
-            read(path, encoding, promise);
-        } catch (Exception e) {
-            promise.reject("EUNSPECIFIED", e.getLocalizedMessage());
-        }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -679,7 +680,6 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void createFile(String path, String fileName, String mimeType, final Promise promise) {
         try {
-
             if (!path.startsWith("content://")) {
                 File file = new File(normalizePath(path) + "/" + fileName);
                 boolean result = file.createNewFile();
@@ -713,85 +713,87 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @ReactMethod
     public void writeFile(String path, String fileName, String mimeType, String data, String encoding, final boolean append, final Promise promise) {
-        try {
-            int written;
+       AsyncTask.execute(() -> {
+           try {
+               int written;
 
-            if (!path.startsWith("content://")) {
-                File file = new File(normalizePath(path));
-                File newFile = null;
-                if (file.isDirectory()) {
-                    newFile = new File(normalizePath(path) + "/" + fileName);
-                    boolean result = newFile.createNewFile();
-                    if (!result) {
-                        promise.resolve(null);
-                        return;
-                    }
-                } else {
-                    newFile = file;
-                }
-                if (!newFile.exists()) {
-                    boolean result = newFile.createNewFile();
-                    if (!result) {
-                        promise.resolve(null);
-                        return;
-                    }
-                }
-                byte[] bytes = stringToBytes(data, encoding);
-                OutputStream fout = new FileOutputStream(newFile, append);
-                try {
-                    fout.write(bytes);
-                    written = bytes.length;
-                } finally {
-                    fout.close();
-                }
-                promise.resolve(newFile.getAbsolutePath());
+               if (!path.startsWith("content://")) {
+                   File file = new File(normalizePath(path));
+                   File newFile = null;
+                   if (file.isDirectory()) {
+                       newFile = new File(normalizePath(path) + "/" + fileName);
+                       boolean result = newFile.createNewFile();
+                       if (!result) {
+                           promise.resolve(null);
+                           return;
+                       }
+                   } else {
+                       newFile = file;
+                   }
+                   if (!newFile.exists()) {
+                       boolean result = newFile.createNewFile();
+                       if (!result) {
+                           promise.resolve(null);
+                           return;
+                       }
+                   }
+                   byte[] bytes = stringToBytes(data, encoding);
+                   OutputStream fout = new FileOutputStream(newFile, append);
+                   try {
+                       fout.write(bytes);
+                       written = bytes.length;
+                   } finally {
+                       fout.close();
+                   }
+                   promise.resolve(newFile.getAbsolutePath());
 
-                promise.resolve(null);
-                return;
-            }
+                   promise.resolve(null);
+                   return;
+               }
 
-            DocumentFile file = null;
-            DocumentFile dir = DocumentFile.fromTreeUri(reactContext, Uri.parse(path));
+               DocumentFile file = null;
+               DocumentFile dir = DocumentFile.fromTreeUri(reactContext, Uri.parse(path));
 
-            if (dir != null && dir.isDirectory()) {
+               if (dir != null && dir.isDirectory()) {
 
-                boolean hasPermission = hasPermission(path);
-                if (!hasPermission) {
-                    promise.reject("ENOENT", "'" + path + "' does not have permission to read/write");
-                    return;
-                }
+                   boolean hasPermission = hasPermission(path);
+                   if (!hasPermission) {
+                       promise.reject("ENOENT", "'" + path + "' does not have permission to read/write");
+                       return;
+                   }
 
-                if (dir.getUri() != null && !dir.getUri().toString().equals(path)) {
-                    dir = mkdir(path);
-                }
+                   if (dir.getUri() != null && !dir.getUri().toString().equals(path)) {
+                       dir = mkdir(path);
+                   }
 
-                file = dir.findFile(fileName);
-                if (file == null) {
-                    file = dir.createFile(mimeType, fileName);
-                }
-            } else {
-                file = dir;
-            }
+                   file = dir.findFile(fileName);
+                   if (file == null) {
+                       file = dir.createFile(mimeType, fileName);
+                   }
+               } else {
+                   file = dir;
+               }
 
-            if (file == null || !file.exists()) {
-                promise.reject("ENOENT", "File could not be created/does not exist");
-                return;
-            }
+               if (file == null || !file.exists()) {
+                   promise.reject("ENOENT", "File could not be created/does not exist");
+                   return;
+               }
 
-            byte[] bytes = stringToBytes(data, encoding);
-            OutputStream fout = reactContext.getContentResolver().openOutputStream(file.getUri(), append ? "wa" : "w");
-            try {
-                fout.write(bytes);
-                written = bytes.length;
-            } finally {
-                fout.close();
-            }
-            promise.resolve(file.getUri().toString());
-        } catch (FileNotFoundException e) {
-            promise.reject("ENOENT", "'" + path + "' does not exist and could not be created, or it is a directory");
-        } catch (Exception e) {
-            promise.reject("EUNSPECIFIED", e.getLocalizedMessage());
-        }
+               byte[] bytes = stringToBytes(data, encoding);
+               OutputStream fout = reactContext.getContentResolver().openOutputStream(file.getUri(), append ? "wa" : "w");
+               try {
+                   fout.write(bytes);
+                   written = bytes.length;
+               } finally {
+                   fout.close();
+               }
+               promise.resolve(file.getUri().toString());
+           } catch (FileNotFoundException e) {
+               promise.reject("ENOENT", "'" + path + "' does not exist and could not be created, or it is a directory");
+           } catch (Exception e) {
+               promise.reject("EUNSPECIFIED", e.getLocalizedMessage());
+           }
+       });
     }
 
     public boolean exists(String path) {
@@ -866,10 +868,6 @@ public class RNScopedStorageModule extends ReactContextBaseJavaModule {
        
        
        });
-
-        
-
-        
     }
 
 
